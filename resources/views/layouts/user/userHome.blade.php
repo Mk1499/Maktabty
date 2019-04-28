@@ -9,7 +9,7 @@
     <link href="{{ asset('css/bookDetails.css') }}" rel="stylesheet">
 </head>
 <body>
-
+    @yield('searchBar')
     @yield('catSideBar')
 </body>
 </html>
