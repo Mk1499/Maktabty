@@ -10,6 +10,16 @@
 </head>
 <body>
     @yield('searchBar')
-    @yield('catSideBar')
+    <div class="container">
+        <div class='row'>
+            <div class='col-lg-4'>
+                @yield('catSideBar')
+            </div>
+            <div class='col-lg-8'>
+                @yield('booksDiv')
+            </div>
+        </div>
+    </div>
+    
 </body>
 </html>

@@ -15,6 +15,7 @@ class BookController extends Controller
     public function index()
     {
         //
+        
     }
 
     /**
@@ -44,9 +45,13 @@ class BookController extends Controller
      * @param  \App\Book  $book
      * @return \Illuminate\Http\Response
      */
-    public function show(Book $book)
+    public function show($id)
     {
         //
+        // $comments = App\Post::find(1)->comments ;
+        return view('book', [
+            'book' => Book::findOrFail($id) ,
+            'comments' => Book::find($id)->comments ]);
     }
 
     /**

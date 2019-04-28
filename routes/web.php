@@ -15,9 +15,8 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/book' , function() {
-    return view('book') ; 
-}) ;
+Route::get('/book/{id}' , 'BookController@show') ;
+
 
 Route::get('/user' , function() {
     return view('user') ; 
