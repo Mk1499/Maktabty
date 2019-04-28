@@ -9,7 +9,16 @@
     <link href="{{ asset('css/bookDetails.css') }}" rel="stylesheet">
 </head>
 <body>
-
-    @yield('catSideBar')
+    <div class="container">
+        <div class='row'>
+            <div class='col-lg-4'>
+                @yield('catSideBar')
+            </div>
+            <div class='col-lg-8'>
+                @yield('booksDiv')
+            </div>
+        </div>
+    </div>
+    
 </body>
 </html>
