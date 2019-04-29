@@ -21,7 +21,6 @@
     <link href="{{ asset('css/bookDetails.css') }}" rel="stylesheet">
     <style>
             html, body {
-                background-color: #fff;
                 background-image:url('https://www.chathamhouse.org/sites/default/files/styles/og_image_4096/public/media_wysiwyg/Library%202011%20%288%29.jpg?itok=hkP73NPc');
                 background-repeat:no-repeat;
                 background-size: 100%;
@@ -38,16 +37,16 @@
         <nav class="navbar navbar-expand-md navbar-light navbar-laravel">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/home') }}">
-                    {{ config('app.name', 'Maktabaty') }}
+                    Home
                 </a>
                 <a class="navbar-brand" href="{{ url('/user') }}">
-                    Main
+                    All Books
                 </a>
-                <a class="navbar-brand" href="{{ url('/book') }}">
-                    Books
+                <a class="navbar-brand" href="{{ url('/user') }}">
+                    Leased Books
                 </a>
-                <a class="navbar-brand" href="{{ url('/favourites') }}">
-                    Favourites
+                <a class="navbar-brand" href="{{ url('/user') }}">
+                    Favourite Books
                 </a>
                     <ul class="navbar-nav ml-auto">
                         @guest
