@@ -40,11 +40,15 @@
                             <div class='row'>
                                     <div class='col-6 offset-6'>
                                         <div class="avg_rate">
+                                            
+                                            @for ($i = 1; $i <= $book->rate; $i++)
                                                     <img src={{ asset('images/FilledStar.png') }} />
-                                                    <img src={{ asset('images/FilledStar.png') }} />
-                                                    <img src={{ asset('images/FilledStar.png') }} />
+                                            @endfor
+
+                                            @for ($i = 1; $i <= 5-$book->rate; $i++)
                                                     <img src={{ asset('images/EmptyStar.png') }} />
-                                                    <img src={{ asset('images/EmptyStar.png') }} />
+                                            @endfor
+
                                         </div>
                                     </div>
                             </div>
@@ -57,19 +61,19 @@
 
                             <div class='row'>
                                 <div class='col-12'>
-                                    <h3><span>By: </span>{{$book->author}}</h3>
+                                    <h5><span>By: </span>{{$book->author}}</h5>
                                 </div>
                             </div>
 
                             <div class='row'>
                                 <div class='col-12'>
-                                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolore saepe a perferendis libero similique delectus dolores,</p>
+                                    <p>{{$book->description}}</p>
                                 </div>
                             </div>
 
                             <div class="row">
                                 <div class='col-8'>
-                                    <span >2 copies available</span>
+                                    <span >{{$book->copies_num}} copies available</span>
                                 </div>
                                 <div class='col-1 offset-1'>
                                     <span style="font-size:200%;color:red;">&hearts;</span>
