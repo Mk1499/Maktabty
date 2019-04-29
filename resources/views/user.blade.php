@@ -2,11 +2,9 @@
 
 @section('catSideBar')
         <ul class="list-group">
-            <li class="list-group-item">Art</li>
-            <li class="list-group-item">Comedy</li>
-            <li class="list-group-item">Drama</li>
-            <li class="list-group-item">tragedy</li>
-            <li class="list-group-item">fiction</li>
+        @foreach($categories as $category)
+            <li class="list-group-item">{{$category->name}}</li>
+        @endforeach
         </ul>
 @endsection
 

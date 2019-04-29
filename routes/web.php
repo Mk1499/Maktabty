@@ -1,5 +1,7 @@
 <?php
 
+
+use App\Http\Controllers\CategoryController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -19,8 +21,12 @@ Route::get('/book/{id}' , 'BookController@show') ;
 Route::resource('comments','CommentController') ; 
 
 Route::get('/user' , function() {
-    return view('user') ; 
+    $cats=CategoryController::getallCategories();
+    return view('user',['categories' => $cats]); 
 }) ;
+
+//Route::get('/user','CategoryController@getallCategories');
+
 
 Auth::routes();
 

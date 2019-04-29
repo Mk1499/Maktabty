@@ -82,4 +82,11 @@ class CategoryController extends Controller
     {
         //
     }
+
+    public static function getallCategories()
+    {
+               $categories = Category::all();
+               //return view('user', ['categories' => Category::all()]);
+               return $categories;
+    }
 }
