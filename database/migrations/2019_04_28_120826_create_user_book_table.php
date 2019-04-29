@@ -13,11 +13,13 @@ class CreateUserBookTable extends Migration
      */
     public function up()
     {
-        Schema::table('user_book', function (Blueprint $table) {
+        
+        Schema::dropIfExists('user_book');
+        Schema::create('user_book', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->bigInteger('book_id');
+            $table->unsignedBigInteger('book_id');
             $table->foreign('book_id')->references('id')->on('books');
-            $table->bigInteger('user_id');
+            $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users');
             $table->boolean('leased')->default(false);
             $table->boolean('favourite')->default(false);
