@@ -9,13 +9,18 @@
     <link href="{{ asset('css/bookDetails.css') }}" rel="stylesheet">
 </head>
 <body>
-    @yield('searchBar')
+    
+    <br/>
     <div class="container">
         <div class='row'>
-            <div class='col-lg-4'>
+            @yield('searchBar')
+        </div>
+        <br/>
+        <div class='row'>
+            <div class='col-2'>
                 @yield('catSideBar')
             </div>
-            <div class='col-lg-8'>
+            <div class='col-10'>
                 @yield('booksDiv')
             </div>
         </div>
