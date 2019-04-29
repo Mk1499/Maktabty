@@ -22,7 +22,7 @@
     <style>
             html, body {
                 background-color: #fff;
-                background-image:url('https://backgrounddownload.com/wp-content/uploads/2018/09/law-library-background-7.jpg');
+                background-image:url('https://www.chathamhouse.org/sites/default/files/styles/og_image_4096/public/media_wysiwyg/Library%202011%20%288%29.jpg?itok=hkP73NPc');
                 background-repeat:no-repeat;
                 background-size: 100%;
                 font-family: 'Nunito', sans-serif;
@@ -37,8 +37,17 @@
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light navbar-laravel">
             <div class="container">
-                <a class="navbar-brand" href="{{ url('/') }}">
+                <a class="navbar-brand" href="{{ url('/home') }}">
                     {{ config('app.name', 'Maktabaty') }}
+                </a>
+                <a class="navbar-brand" href="{{ url('/user') }}">
+                    Main
+                </a>
+                <a class="navbar-brand" href="{{ url('/book') }}">
+                    Books
+                </a>
+                <a class="navbar-brand" href="{{ url('/favourites') }}">
+                    Favourites
                 </a>
                     <ul class="navbar-nav ml-auto">
                         @guest
