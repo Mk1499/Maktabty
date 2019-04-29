@@ -49,9 +49,10 @@ class BookController extends Controller
     {
         //
         // $comments = App\Post::find(1)->comments ;
-        return view('book', [
-            'book' => Book::findOrFail($id) ,
-            'comments' => Book::find($id)->comments ]);
+
+           	$book = Book::find($id);
+
+        return view('books.show', compact('book'));
     }
 
     /**
