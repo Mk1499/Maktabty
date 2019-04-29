@@ -21,9 +21,7 @@
     <link href="{{ asset('css/bookDetails.css') }}" rel="stylesheet">
     <style>
             html, body {
-                background-image:url('https://www.chathamhouse.org/sites/default/files/styles/og_image_4096/public/media_wysiwyg/Library%202011%20%288%29.jpg?itok=hkP73NPc');
-                background-repeat:no-repeat;
-                background-size: 100%;
+                background-color: #F0C57B;
                 font-family: 'Nunito', sans-serif;
                 height: 100vh;
                 margin: 0;
