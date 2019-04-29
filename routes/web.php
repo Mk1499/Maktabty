@@ -16,7 +16,7 @@ Route::get('/', function () {
 });
 
 Route::get('/book/{id}' , 'BookController@show') ;
-
+Route::resource('comments','CommentController') ; 
 
 Route::get('/user' , function() {
     return view('user') ; 

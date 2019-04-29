@@ -15,6 +15,7 @@ class CommentController extends Controller
     public function index()
     {
         //
+        $comments = auth()->user()->comments ; 
     }
 
     /**
@@ -36,6 +37,25 @@ class CommentController extends Controller
     public function store(Request $request)
     {
         //
+        // $input = $request->all();
+        // $input['user_id'] = auth()->user()->id;
+        // $request->validate([
+        //     'body'=>['required']
+        // ]) ; 
+        // $input->save();
+        // Comment::create($input);
+
+        $user_id = auth()->user()->id  ; 
+        $request->validate([
+                'body'=>['required']
+            ]) ;
+        $comment = new Comment([
+            'body' => $request->get('body') , 
+             'book_id' => $request->get('book_id') ,
+             'user_id' => $user_id
+        ]) ; 
+            $comment->save() ; 
+        return back();
     }
 
     /**
