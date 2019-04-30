@@ -104,4 +104,10 @@ class BookController extends Controller
     {
         //
     }
+
+    public static function getallBooks()
+    {
+               $books = Book::all();
+               return $books;
+    }
 }

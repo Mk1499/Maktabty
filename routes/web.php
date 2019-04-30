@@ -2,6 +2,7 @@
 
 
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\BookController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -22,7 +23,8 @@ Route::resource('comments','CommentController') ;
 
 Route::get('/user' , function() {
     $cats=CategoryController::getallCategories();
-    return view('user',['categories' => $cats]); 
+    $books=BookController::getallBooks();
+    return view('user',['categories' => $cats,'books'=>$books]); 
 }) ;
 
 //Route::get('/user','CategoryController@getallCategories');
