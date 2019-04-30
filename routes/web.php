@@ -31,6 +31,8 @@ Route::get('/user' , function() {
 
 Route::post('addToFav', 'UserBookController@addToFav');
 Route::post('leaseBook', 'UserBookController@leaseBook');
+Route::post('rateBook', 'UserBookController@rateBook');
+
 
 Auth::routes();
 
