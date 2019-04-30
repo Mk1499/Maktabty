@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Book;
+use App\UserBook ; 
 use Illuminate\Http\Request;
 
 class BookController extends Controller
@@ -50,9 +51,24 @@ class BookController extends Controller
         //
         // $comments = App\Post::find(1)->comments ;
 
-           	$book = Book::find($id);
+               $book = Book::find($id);
+               $user_id = auth()->user()->id  ;
+               $relations = [ 
+                'book_id'=> $book->id ,
+                'user_id'=>$user_id , 
+                'leased'=> 0 , 
+                'favourite'=> 0 , 
+                'rate' => 0
+                   ] ;
+                   $relations = json_encode($relations) ;
+                   $relations = json_decode($relations) ; 
 
-        return view('books.show', compact('book'));
+               $rel = UserBook::where('user_id','=',1)->where('book_id','=',$book->id)->get() ; 
+                
+               if (sizeof($rel)>0)
+                $relations = $rel[0] ; 
+
+        return view('books.show', compact('book' , 'relations'));
     }
 
     /**

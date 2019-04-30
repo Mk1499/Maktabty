@@ -27,6 +27,8 @@ Route::get('/user' , function() {
 
 //Route::get('/user','CategoryController@getallCategories');
 
+Route::post('addToFav', 'UserBookController@addToFav');
+Route::post('leaseBook', 'UserBookController@leaseBook');
 
 Auth::routes();
 

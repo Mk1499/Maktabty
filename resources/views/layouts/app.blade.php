@@ -10,6 +10,7 @@
     <title>{{ config('app.name', 'Maktabaty') }}</title>
 
     <!-- Scripts -->
+    <script src="https://code.jquery.com/jquery-3.4.0.min.js"></script>
     <script src="{{ asset('js/app.js') }}" defer></script>
 
     <!-- Fonts -->
@@ -69,6 +70,7 @@
 
         <main class="py-4">
             @yield('content')
+            @yield('javascript')
         </main>
     </div>
 </body>
