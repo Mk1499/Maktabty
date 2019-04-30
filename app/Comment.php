@@ -11,7 +11,7 @@ class Comment extends Model
     // use SoftDeletes;
     protected $dates = ['deleted_at'];
 
-    protected $fillable = ['body', 'user_id', 'book_id'];
+    protected $fillable = ['rate','body', 'user_id', 'book_id'];
 
     // public function book()
     // {
