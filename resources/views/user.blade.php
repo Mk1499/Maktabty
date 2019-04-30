@@ -4,7 +4,7 @@
 @section('catSideBar')
         <ul class="list-group">
         @foreach($categories as $category)
-            <li class="list-group-item">{{$category->name}}</li>
+            <li class="list-group-item"><a href="">{{$category->name}}</a></li>
         @endforeach
         </ul>
 @endsection
@@ -71,14 +71,14 @@
                                 </div>
                             </div>
 
-                            <div class="row">
+                            <!--<div class="row">
                                 <div class='col-8'>
                                     <span >{{$book->copies_num}} copies available</span>
                                 </div>
                                 <div class='col-1 offset-1'>
                                     <span style="font-size:200%;color:red;">&hearts;</span>
                                 </div>
-                            </div>
+                            </div>-->
 
                             <div class='row'>
                                 <div class='col-12 text-center'>
@@ -86,9 +86,12 @@
                                 </div>
                             </div>
                     </div>
-
                 @endforeach
-
-                    
+                </div>
+                <br><br>
+                <div class='container'>
+                    <div style='margin-left: 280px;'>
+                        {{ $books->links() }}                    
+                    </div>
                 </div>
 @endsection

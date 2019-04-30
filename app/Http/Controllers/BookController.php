@@ -91,7 +91,7 @@ class BookController extends Controller
 
     public static function getallBooks()
     {
-               $books = Book::all();
+               $books = Book::paginate(3);
                return $books;
     }
 }
