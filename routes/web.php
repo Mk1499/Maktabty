@@ -3,6 +3,7 @@
 
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\BookController;
+use App\Http\Controllers\UserController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -31,6 +32,7 @@ Route::get('/user' , function() {
 Route::post('addToFav', 'UserBookController@addToFav');
 Route::post('leaseBook', 'UserBookController@leaseBook');
 Route::resource('books', 'BookController');
+Route::resource('users', 'UserController');
 Route::resource('categories', 'CategoryController');
 Route::post('rateBook', 'UserBookController@rateBook');
 Auth::routes();

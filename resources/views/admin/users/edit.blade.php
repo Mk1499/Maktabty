@@ -4,7 +4,7 @@
 <div class="row">
  <div class="col-sm-8 offset-sm-2">
 
-    <h1 class="display-6">Edit Book " {{$book->book_name}} "</h1>
+    <h1 class="display-6">Edit User " {{$user->name}} "</h1>
   <div>
     @if ($errors->any())
       <div class="alert alert-danger">
@@ -15,44 +15,44 @@
         </ul>
       </div><br />
     @endif
-      <form method="post" action="{{ route('books.update',$book->id)}}" enctype="multipart/form-data">
+      <form method="post" action="{{ route('users.update',$user->id)}}">
         @method('PATCH') 
           @csrf
           <div class="form-group">    
-              <label for="book_name">Book Name:</label>
-              <input type="text" class="form-control" name="book_name" value="{{ old('book_name',$book->book_name) }}"/>
+              <label for="name">Name:</label>
+              <input type="text" class="form-control" name="name" value="{{ old('name', $user->name) }}"/>
           </div>
 
           <div class="form-group">
-              <label for="author">Author:</label>
-              <input type="text" class="form-control" name="author" value="{{ old('author',$book->author) }}"/>
+              <label for="email">Email:</label>
+              <input type="email" class="form-control" name="email" value="{{ old('email',$user->email) }}"/>
           </div>
 
           <div class="form-group">
-              <label for="category">Category:</label>
-              <select name="category" value="{{ old('category',$book->catrgory_id) }}" >
-              @foreach($categories as $category)
-                <option value="{{$category->id}}">{{$category->name}}</option>
-              @endforeach
-              </select>
+              <label for="username">Username:</label>
+              <input type="text" class="form-control" name="username" value="{{ old('username', $user->username) }}"/>
           </div>
 
           <div class="form-group">
-              <label for="copies_num">Number of Copies</label>
-              <input type="number" class="form-control" name="copies_num" min="1" value="{{ old('copies_num',$book->copies_num) }}"/>
+              <label for="password">Password:</label>
+              <input type="password" class="form-control" name="password" value="{{ old('password','') }}" />
           </div>
 
           <div class="form-group">
-              <label for="description">Description:</label>
-              <textarea class="form-control" name="description" rows="5" value="" >{{ old('description',$book->description) }}</textarea>
+              <label for="nationalid">NationalID:</label><br />
+              <input  class="form-control" type="text"  name="nationalid" value="{{ old('nationalid', $user->nationalid) }}"/>
+          </div>
+          <div class="form-group">
+              <label for="phone">Phone:</label><br />
+              <input  class="form-control" type="tel"  name="phone" value="{{ old('phone', $user->phone) }}"/>
           </div>
 
           <div class="form-group">
-              <label for="book_image">Book Image:</label><br />
-              <input type="file"  name="book_image" />
+              <label for="isactive">Active status:</label><br />
+              <input  class="form-control" type="number" min="0" max="1" size="1" name="isactive" value="{{ old('isactive', $user->isactive) }}"/>
           </div>
                       
-          <button type="submit" class="btn btn-primary-outline" style="float:right">Edit Book</button>
+          <button type="submit" class="btn btn-primary-outline" style="float:right">Edit User</button>
       </form>
   </div>
 </div>

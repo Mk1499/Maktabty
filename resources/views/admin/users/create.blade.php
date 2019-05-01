@@ -4,7 +4,7 @@
 <div class="row">
  <div class="col-sm-8 offset-sm-2">
 
-    <h1 class="display-3">Add a Book</h1>
+    <h1 class="display-5">Add a User</h1>
   <div>
     @if ($errors->any())
       <div class="alert alert-danger">
@@ -15,43 +15,38 @@
         </ul>
       </div><br />
     @endif
-      <form method="post" action="{{ route('books.store') }}" enctype="multipart/form-data">
+      <form method="post" action="{{ route('users.store') }}">
           @csrf
           <div class="form-group">    
-              <label for="book_name">Book Name:</label>
-              <input type="text" class="form-control" name="book_name" value="{{ old('book_name') }}"/>
+              <label for="name">Name:</label>
+              <input type="text" class="form-control" name="name" value="{{ old('name') }}"/>
           </div>
 
           <div class="form-group">
-              <label for="author">Author:</label>
-              <input type="text" class="form-control" name="author" value="{{ old('author','') }}"/>
+              <label for="email">Email:</label>
+              <input type="email" class="form-control" name="email" value="{{ old('email','') }}"/>
           </div>
 
           <div class="form-group">
-              <label for="category">Category:</label>
-              <select name="category" value="{{ old('category','') }}" >
-              @foreach($categories as $category)
-                <option value="{{$category->id}}">{{$category->name}}</option>
-              @endforeach
-              </select>
+              <label for="username">Username:</label>
+              <input type="text" class="form-control" name="username" value="{{ old('username','') }}"/>
           </div>
 
           <div class="form-group">
-              <label for="copies_num">Number of Copies</label>
-              <input type="number" class="form-control" name="copies_num" min="1" value="{{ old('copies_num','') }}"/>
+              <label for="password">Password:</label>
+              <input type="password" class="form-control" name="password" value="{{ old('password','') }}" />
           </div>
 
           <div class="form-group">
-              <label for="description">Description:</label>
-              <textarea class="form-control" name="description" rows="5" value="{{ old('description','') }}" ></textarea>
+              <label for="nationalid">NationalID:</label><br />
+              <input  class="form-control" type="text"  name="nationalid" value="{{ old('nationalid','') }}"/>
           </div>
-
           <div class="form-group">
-              <label for="book_image">Book Image:</label><br />
-              <input type="file"  name="book_image" />
+              <label for="phone">Phone:</label><br />
+              <input  class="form-control" type="tel"  name="phone" value="{{ old('phone','') }}"/>
           </div>
                       
-          <button type="submit" class="btn btn-primary-outline" style="float:right">Add Book</button>
+          <button type="submit" class="btn btn-primary-outline" style="float:right">Add User</button>
       </form>
   </div>
 </div>
