@@ -13,11 +13,12 @@
                         <h3> {{$book->book_name}} </h3>
                         
                         <div class="avg_rate">
-                            <img src={{ asset('images/FilledStar.png') }} >
-                            <img src={{ asset('images/FilledStar.png') }} >
-                            <img src={{ asset('images/FilledStar.png') }} >
-                            <img src={{ asset('images/EmptyStar.png') }} >
-                            <img src={{ asset('images/EmptyStar.png') }} >
+                            <span id="avg_rate_1" class="ratingStar emptyRatingStar" > &nbsp;</span>
+                            <span id="avg_rate_2" class="ratingStar emptyRatingStar" >&nbsp;</span>
+                            <span id="avg_rate_3" class="ratingStar emptyRatingStar" >&nbsp;</span>
+                            <span id="avg_rate_4" class="ratingStar emptyRatingStar" >&nbsp;</span>
+                            <span id="avg_rate_5" class="ratingStar emptyRatingStar" >&nbsp;</span>
+
                         </div>
                         <div class="book_description">
                             <p>
@@ -71,17 +72,22 @@
                 </div>
 
                 <div class="col-sm-4">
-                            <img src={{ asset('images/EmptyStar.png') }} >
-                            <img src={{ asset('images/EmptyStar.png') }} >
-                            <img src={{ asset('images/EmptyStar.png') }} >
-                            <img src={{ asset('images/EmptyStar.png') }} >
-                            <img src={{ asset('images/EmptyStar.png') }} >
+                            <span value="1" id ="book_rate_1" class="book_rate ratingStar emptyRatingStar" > &nbsp;</span>
+                            <span value="2" id ="book_rate_2" class="book_rate ratingStar emptyRatingStar" >&nbsp;</span>
+                            <span value="3" id ="book_rate_3" class="book_rate ratingStar emptyRatingStar" >&nbsp;</span>
+                            <span value="4" id ="book_rate_4" class="book_rate ratingStar emptyRatingStar" >&nbsp;</span>
+                            <span value="5" id ="book_rate_5" class="book_rate ratingStar emptyRatingStar" >&nbsp;</span>
                 </div>
             </div>
             <hr />
             <br /> <br /> <br />
+            <hr>
             <h4>Display Comments</h4>
+            @if (sizeof($book->comments) > 0)
             @include('books.commentsDisplay', ['comments' => $book->comments, 'book_id' => $book->id])
+            @else
+                <h3 class="text-center"> Sorry but there is no comments for this book </h3>
+            @endif
     
         </div>
 
@@ -96,6 +102,8 @@
                 var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
                 console.log('works') ;
                 
+    // ================================ Click Add Book to Fav Btn ===========================//
+
                 $("#favIcon").click(function(){
                     //alert("Clikced") ; 
 
@@ -122,6 +130,8 @@
 
             })
 
+            // ================================ Click Lease Book Btn ===========================//
+
             $("#lease_btn").click(function(){
                 $.ajax({
                     url: "{{url('leaseBook')}}",
@@ -140,6 +150,46 @@
                  //end of ajax
                  $(this).attr('disabled','true') ; 
             })
+
+    // ================================ Rate Book ===========================//
+
+        $(".book_rate").click(function(){
+
+            $.ajax({
+                url: "{{url('rateBook')}}",
+                type:"POST" ,
+                 
+                data: {'_token':'{{csrf_token()}}' , 
+                        'book_id' : '{{$book->id}}' ,
+                        'rate': $(this).attr("value") } , 
+                success:function(data){
+                    
+                },error:function(){ 
+                    alert("error!!!!");
+                }
+            });
+
+            for (let i=1 ; i<=5 ; i++){
+               
+                if (i <= $(this).attr("value") ){
+                    
+                    $(`#book_rate_${i}`).removeClass('emptyRatingStar').addClass('filledRatingStar')
+                }
+            }
+
+            })
+    // ================================ Diplay Avg Rating ===========================//
+
+            let avgRate = {{$book->rate}}; 
+            console.log("Rate : ",avgRate) ; 
+
+            for (let i=1 ; i<=5 ; i++){
+               
+                if (i <= avgRate){
+                    
+                    $(`#avg_rate_${i}`).removeClass('emptyRatingStar').addClass('filledRatingStar')
+                }
+            }
         })
         </script>
 

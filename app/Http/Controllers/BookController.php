@@ -93,8 +93,10 @@ class BookController extends Controller
     {
         //
         // $comments = App\Post::find(1)->comments ;
+        // $this->authorize('view',$book) ; 
 
                $book = Book::find($id);
+               $this->authorize('view',$book) ; 
                $user_id = auth()->user()->id  ;
                $relations = [ 
                 'book_id'=> $book->id ,
@@ -106,7 +108,7 @@ class BookController extends Controller
                    $relations = json_encode($relations) ;
                    $relations = json_decode($relations) ; 
 
-               $rel = UserBook::where('user_id','=',1)->where('book_id','=',$book->id)->get() ; 
+               $rel = UserBook::where('user_id','=',$user_id)->where('book_id','=',$book->id)->get() ; 
                 
                if (sizeof($rel)>0)
                 $relations = $rel[0] ; 
@@ -195,7 +197,7 @@ class BookController extends Controller
 
     public static function getallBooks()
     {
-               $books = Book::all();
+               $books = Book::paginate(3);
                return $books;
     }
 }

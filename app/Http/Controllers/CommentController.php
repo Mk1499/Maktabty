@@ -49,10 +49,17 @@ class CommentController extends Controller
         $request->validate([
                 'body'=>['required']
             ]) ;
+        $comm_before = Comment::where('user_id','=',$user_id )->where('book_id','=',$request->get('book_id'))->get() ;
+        if (sizeof($comm_before)>0)
+        $last_rate = $comm_before[0]->rate ; 
+        else 
+        $last_rate = 0 ; 
+
         $comment = new Comment([
             'body' => $request->get('body') , 
              'book_id' => $request->get('book_id') ,
-             'user_id' => $user_id
+             'user_id' => $user_id , 
+             'rate' =>  $last_rate 
         ]) ; 
             $comment->save() ; 
         return back();

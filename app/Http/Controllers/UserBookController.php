@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\UserBook ; 
 use App\Book ; 
-
+use App\Comment ; 
 class UserBookController extends Controller
 {
     //
@@ -90,4 +90,43 @@ class UserBookController extends Controller
             'status' => 'it works!'
         ]);
     }
+
+
+    // User Rate Book  
+    public function rateBook (Request $request) {
+
+
+        $user_id = auth()->user()->id  ; 
+       
+        $request->validate([
+            'book_id'=>['required'] ,
+            'rate'=>['required'] 
+        ]) ;
+
+        $rel_id = Comment::where('user_id','=',$user_id )->where('book_id','=',$request->get('book_id'))->get('id') ;
+
+        if(sizeof($rel_id)> 0 ){
+            for ($i =  0; $i< sizeof($rel_id) ; $i++){
+            $user_book = Comment::find($rel_id[$i]->id) ;
+            $user_book->book_id = $request->get('book_id');
+            $user_book->rate = $request->get('rate');
+            $user_book->save();
+        }
+        }
+        else {
+            $user_book = new Comment([
+                 'rate' => $request->get('rate'), 
+                 'book_id' => $request->get('book_id') ,
+                 'body' =>'Rate without comment ' ,
+                 'user_id' => $user_id
+            ]) ;
+            $user_book->save() ; 
+
+        }
+
+        return response()->json([
+            'status' => 'it works!'
+        ]);
+    }
+    
 }

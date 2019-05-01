@@ -32,6 +32,7 @@ Route::get('/admin/books', 'BookController@index')->name('books');
 Route::post('addToFav', 'UserBookController@addToFav');
 Route::post('leaseBook', 'UserBookController@leaseBook');
 Route::resource('books', 'BookController');
+Route::post('rateBook', 'UserBookController@rateBook');
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
