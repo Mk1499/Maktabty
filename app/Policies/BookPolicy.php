@@ -4,6 +4,7 @@ namespace App\Policies;
 
 use App\User;
 use App\Book;
+use App\UserBook;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class BookPolicy
@@ -55,7 +56,16 @@ class BookPolicy
      */
     public function delete(User $user, Book $book)
     {
-        //
+        $leased_books = UserBook::all()->reject(function ($user) {
+            return $user->leased == 0;
+        })->values();
+        
+        foreach($leased_books as $leased){
+            if($book->id === $leased->id)
+                return false;
+        }
+
+        return true;
     }
 
     /**
