@@ -7,7 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Book extends Model
 {
-    //
+    protected $fillable = [
+        'book_name', 'book_image', 'author', 'category_id','description', 'rate', 'copies_num'
+    ];
 
     public function comments()
     {

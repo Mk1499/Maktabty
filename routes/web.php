@@ -18,7 +18,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/book/{id}' , 'BookController@show') ;
+
 Route::resource('comments','CommentController') ; 
 
 Route::get('/user' , function() {
@@ -28,10 +28,10 @@ Route::get('/user' , function() {
 }) ;
 
 //Route::get('/user','CategoryController@getallCategories');
-
+Route::get('/admin/books', 'BookController@index')->name('books');
 Route::post('addToFav', 'UserBookController@addToFav');
 Route::post('leaseBook', 'UserBookController@leaseBook');
-
+Route::resource('books', 'BookController');
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
