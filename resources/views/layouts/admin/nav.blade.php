@@ -34,9 +34,9 @@
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav mr-auto">
                         <li><a class="navbar-brand" href="{{ url('/admin') }}">Home</a></li>
-                        <li><a class="navbar-brand" href="{{ url('/admin/users') }}">Users</a></li>
-                        <li><a class="navbar-brand" href="{{ url('/admin/books') }}">Books</a></li>
-                        <li><a class="navbar-brand" href="{{ url('/admin/catgories') }}">Categories</a></li>
+                        <li><a class="navbar-brand" href="{{ url('/users') }}">Users</a></li>
+                        <li><a class="navbar-brand" href="{{ url('/books') }}">Books</a></li>
+                        <li><a class="navbar-brand" href="{{ url('/categories') }}">Categories</a></li>
                     </ul>
 
                     <!-- Right Side Of Navbar -->

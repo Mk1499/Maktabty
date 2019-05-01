@@ -28,10 +28,10 @@ Route::get('/user' , function() {
 }) ;
 
 //Route::get('/user','CategoryController@getallCategories');
-Route::get('/admin/books', 'BookController@index')->name('books');
 Route::post('addToFav', 'UserBookController@addToFav');
 Route::post('leaseBook', 'UserBookController@leaseBook');
 Route::resource('books', 'BookController');
+Route::resource('categories', 'CategoryController');
 Route::post('rateBook', 'UserBookController@rateBook');
 Auth::routes();
 

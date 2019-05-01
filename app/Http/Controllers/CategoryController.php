@@ -4,7 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Category;
 use Illuminate\Http\Request;
-
+use Illuminate\Validation\Rule;
+use Validator;
 class CategoryController extends Controller
 {
     /**
@@ -14,7 +15,9 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        //
+        $categories = Category::all();
+
+        return view('admin.categories', compact('categories'));
     }
 
     /**
@@ -24,7 +27,7 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.categories.create');
     }
 
     /**
@@ -35,7 +38,30 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'name' => [
+                'required',
+                Rule::unique('categories','name')
+            ],
+            'description'=>['required'],
+
+        ]);
+
+        if ($validator->fails()) {
+            return redirect('categories/create')
+                        ->withErrors($validator)
+                        ->withInput();
+        }
+        
+        $category = new Category([
+            'name' => $request->get('name'),
+            "description" => $request->get('description')
+            ]);
+
+        $category->save();
+
+        return redirect('categories')->with('success', 'Category saved successfully!');
+
     }
 
     /**
@@ -57,7 +83,7 @@ class CategoryController extends Controller
      */
     public function edit(Category $category)
     {
-        //
+        return view('admin.categories.edit',compact('category',$category));
     }
 
     /**
@@ -69,7 +95,28 @@ class CategoryController extends Controller
      */
     public function update(Request $request, Category $category)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'name' => [
+                'required',
+                Rule::unique('categories','name')->ignore($category->id)
+            ],
+            'description'=>['required'],
+
+        ]);
+
+        if ($validator->fails()) {
+            return redirect('categories/'. $category->id .'/edit')
+                        ->withErrors($validator)
+                        ->withInput();
+        }
+        
+        $category->name = $request->get('name');
+        $category->description = $request->get('description');
+
+        $category->save();
+
+        return redirect('categories')->with('success', 'Category edited successfully!');
+
     }
 
     /**
@@ -80,7 +127,8 @@ class CategoryController extends Controller
      */
     public function destroy(Category $category)
     {
-        //
+        $category->delete();
+        return redirect('/categories')->with('success', 'Category deleted!');
     }
 
     public static function getallCategories()

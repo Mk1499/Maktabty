@@ -66,7 +66,7 @@ class BookController extends Controller
             
                     $book->save();
             
-                    return redirect('/admin/books')->with('success', 'Book saved successfully!');
+                    return redirect('books')->with('success', 'Book saved successfully!');
                 } catch (FileNotFoundException $e) {
                     return redirect('/books/create')->withErrors('Book Image not saved')->withInput();
     
@@ -178,7 +178,7 @@ class BookController extends Controller
 
         $book->save();
 
-        return redirect('/admin/books')->with('success', 'Book Edited successfully!');
+        return redirect('books')->with('success', 'Book Edited successfully!');
     }
 
     /**
@@ -189,10 +189,9 @@ class BookController extends Controller
      */
     public function destroy(Book $book)
     {
-        $book = Book::find($book->id);
-        $book->delete();
 
-        return redirect('/admin/books')->with('success', 'Book deleted!');
+        $book->delete();
+        return redirect('books')->with('success', 'Book deleted!');
     }
 
     public static function getallBooks()
