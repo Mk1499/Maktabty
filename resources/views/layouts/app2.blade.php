@@ -21,7 +21,7 @@
     <link href="{{ asset('css/bookDetails.css') }}" rel="stylesheet">
     <style>
             html, body {
-                background-color: #F0C57B;
+                background-color: #EFC070;
                 font-family: 'Nunito', sans-serif;
                 height: 100vh;
                 margin: 0;

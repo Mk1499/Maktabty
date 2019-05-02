@@ -14,7 +14,7 @@
                         </div>
                     @endif
                     <!-- check -->
-                    <form method="post" action="{{route('users.update', $user)}}">
+                    <form method="post" action="{{route('users.updateProfile', $user)}}">
                         <!-- @method('PATCH') 
                         @csrf -->
                         {{ csrf_field() }}
@@ -49,15 +49,13 @@
                             <label for="phone">Phone:</label>
                             <input type="text" class="form-control" name="phone" value="{{ $user->phone }}" />
                         </div>
-                        <form enctype="multipart/form-data" action="{{ route('user.updateImage') }}" method="POST">
+                        <form enctype="multipart/form-data" method="POST">
                             <label>Update Profile Image</label>
                             <input type="file" name="user_image">
                             <input type="hidden" name="_token" value="{{ csrf_token() }}">
                             <input type="submit" class="pull-right btn btn-sm btn-primary">
                         </form>
-                        <button type="submit" class="btn btn-primary">Update</button>
                     </form>
-
                 </div>
             </div>
         </div>

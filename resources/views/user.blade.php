@@ -1,5 +1,5 @@
 @extends('layouts.user.userHome')
-@extends('layouts.app3')
+@extends('layouts.app2')
 
 @section('catSideBar')
         <ul class="list-group">

@@ -133,19 +133,63 @@ class UserController extends Controller
         return redirect('/users')->with('success', 'User updated!');
     }
 
-    public function updateImage(Request $request)
+
+    public function updateProfile(Request $request, User $user)
     {
-        // Logic for user upload of avatar
-        if($request->hasFile('user_image')){
-            $avatar = $request->file('user_image');
-            $filename = time() . '.' . $avatar->getClientOriginalExtension();
-            Image::make($avatar)->resize(50, 50)->save( public_path('/uploads/avatars/' . $filename ) );
-            $user = Auth::user();
-            $user->avatar = $filename;
-            $user->save();
+        $validator = Validator::make($request->all(), [
+            'name' => ['required'],
+            'email' => [
+                'required',
+                Rule::unique('users','email')->ignore($user->id)
+            ],
+            'username' => [
+                'required',
+                Rule::unique('users','email')->ignore($user->id)
+            ],
+            'nationalid' => [
+                'required',
+                Rule::unique('users','nationalid')->ignore($user->id)
+            ],
+            'password'=>'required',
+            'phone'=>'required',
+            'user_image'=>'required',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect('/home')->withErrors($validator)->withInput();
         }
-        return view('user', ['user' => Auth::user()] );
+
+        $user->name =  $request->get('name');
+        $user->username = $request->get('username');
+        $user->email = $request->get('email');
+        $user->nationalid = $request->get('nationalid');
+        $user->password = Hash::make($request->get('password'));
+        $user->phone = $request->get('phone');
+        if($request->hasFile('user_image')){
+            $user_image = $request->file('user_image');
+            $filename = time() . '.' . $user_image->getClientOriginalExtension();
+            Image::make($user_image)->resize(50, 50)->save( public_path('/uploads/avatars/' . $filename ) );
+            $user = Auth::user();
+            $user->user_image = $filename;
+        }
+        $user->save();
+        return redirect('/home')->with('success', 'User updated!');
     }
+
+
+    // public function updateImage(Request $request)
+    // {
+    //     // Logic for user upload of avatar
+    //     if($request->hasFile('user_image')){
+    //         $user_image = $request->file('user_image');
+    //         $filename = time() . '.' . $user_image->getClientOriginalExtension();
+    //         Image::make($user_image)->resize(50, 50)->save( public_path('/uploads/avatars/' . $filename ) );
+    //         $user = Auth::user();
+    //         $user->user_image = $filename;
+    //         $user->save();
+    //     }
+    //     return view('/home', ['user' => Auth::user()] );
+    // }
 
 
     public function destroy(User $user)
