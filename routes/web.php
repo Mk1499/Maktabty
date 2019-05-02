@@ -3,6 +3,7 @@
 
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\BookController;
+use App\Http\Controllers\UserController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -18,7 +19,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/book/{id}' , 'BookController@show') ;
+
 Route::resource('comments','CommentController') ; 
 
 Route::get('users/{user}',  ['as' => 'users.edit', 'uses' => 'UserController@edit']);
@@ -32,8 +33,12 @@ Route::get('/user' , function() {
 }) ;
 
 //Route::get('/user','CategoryController@getallCategories');
-
-
+Route::post('addToFav', 'UserBookController@addToFav');
+Route::post('leaseBook', 'UserBookController@leaseBook');
+Route::resource('books', 'BookController');
+Route::resource('users', 'UserController');
+Route::resource('categories', 'CategoryController');
+Route::post('rateBook', 'UserBookController@rateBook');
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');

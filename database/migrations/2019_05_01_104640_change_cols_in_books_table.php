@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddColsToBooks extends Migration
+class ChangeColsInBooksTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,16 +13,7 @@ class AddColsToBooks extends Migration
      */
     public function up()
     {
-        Schema::table('books', function (Blueprint $table) {
-            //
-            $table->string('description') ; 
-            $table->unsignedBigInteger('rate') ;
-            $table->unsignedBigInteger('copies_num') ; 
-
-            
-        });
-
-        
+        DB::statement("ALTER TABLE books MODIFY book_image LONGBLOB");
     }
 
     /**

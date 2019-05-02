@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateUserBookTable extends Migration
+class CreateUserBooksTable extends Migration
 {
     /**
      * Run the migrations.
@@ -15,7 +15,7 @@ class CreateUserBookTable extends Migration
     {
         
        
-        Schema::create('user_book', function (Blueprint $table) {
+        Schema::create('user_books', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('book_id');
             $table->foreign('book_id')->references('id')->on('books');
@@ -23,7 +23,7 @@ class CreateUserBookTable extends Migration
             $table->foreign('user_id')->references('id')->on('users');
             $table->boolean('leased')->default(false);
             $table->boolean('favourite')->default(false);
-            $table->bigInteger('rate');
+            // $table->bigInteger('rate')->default(0);
             $table->timestamps();
         });
     }
@@ -35,6 +35,6 @@ class CreateUserBookTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('user_book');
+        Schema::dropIfExists('user_books');
     }
 }

@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddColsToBooks extends Migration
+class AddRateToComments extends Migration
 {
     /**
      * Run the migrations.
@@ -13,16 +13,10 @@ class AddColsToBooks extends Migration
      */
     public function up()
     {
-        Schema::table('books', function (Blueprint $table) {
+        Schema::table('comments', function (Blueprint $table) {
             //
-            $table->string('description') ; 
-            $table->unsignedBigInteger('rate') ;
-            $table->unsignedBigInteger('copies_num') ; 
-
-            
+            $table->bigInteger('rate')->default(0);
         });
-
-        
     }
 
     /**
@@ -32,7 +26,7 @@ class AddColsToBooks extends Migration
      */
     public function down()
     {
-        Schema::table('books', function (Blueprint $table) {
+        Schema::table('comments', function (Blueprint $table) {
             //
         });
     }
