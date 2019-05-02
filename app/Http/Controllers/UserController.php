@@ -56,6 +56,7 @@ class UserController extends Controller
             ],
             'phone'=>'required',
             'password'=>'required',
+            'user_image'=>'required',
 
         ]);
 
@@ -71,6 +72,7 @@ class UserController extends Controller
             'email' => $request->get('email'),
             'nationalid' => $request->get('nationalid'),
             'phone' => $request->get('phone'),
+            'user_image' => $request->get('user_image'),
             'password' => Hash::make($request->get('password')),
         ]);
 
