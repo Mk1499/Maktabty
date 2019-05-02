@@ -21,6 +21,10 @@ Route::get('/', function () {
 Route::get('/book/{id}' , 'BookController@show') ;
 Route::resource('comments','CommentController') ; 
 
+Route::get('users/{user}',  ['as' => 'users.edit', 'uses' => 'UserController@edit']);
+Route::patch('users/{user}/update',  ['as' => 'users.update', 'uses' => 'UserController@update']);
+
+
 Route::get('/user' , function() {
     $cats=CategoryController::getallCategories();
     $books=BookController::getallBooks();

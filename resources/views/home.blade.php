@@ -13,10 +13,12 @@
                             {{ session('status') }}
                         </div>
                     @endif
-                    
-                    <form method="post">
-                        @method('PATCH') 
-                        @csrf
+                    <!-- check -->
+                    <form method="post" action="{{route('users.update', $user)}}">
+                        <!-- @method('PATCH') 
+                        @csrf -->
+                        {{ csrf_field() }}
+                        {{ method_field('patch') }}
                         <div class="form-group">
 
                             <label for="name">Name:</label>
@@ -49,9 +51,6 @@
                         </div>
                         <button type="submit" class="btn btn-primary">Update</button>
                     </form>
-
-
-                    <!-- check -->
 
                 </div>
             </div>
