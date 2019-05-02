@@ -25,6 +25,8 @@ Route::resource('comments','CommentController') ;
 Route::get('users/{user}',  ['as' => 'users.edit', 'uses' => 'UserController@edit']);
 Route::patch('users/{user}/update',  ['as' => 'users.update', 'uses' => 'UserController@update']);
 
+Route::get('user', 'UserController@show')->middleware('auth')->name('user.show');
+Route::post('user', 'UserController@updateImage')->middleware('auth')->name('user.updateImage');
 
 Route::get('/user' , function() {
     $cats=CategoryController::getallCategories();

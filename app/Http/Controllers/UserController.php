@@ -15,6 +15,11 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function show()
+    {
+        return view('user', ['user' => Auth::user()] );
+    }
+
     public function index()
     {
         $users = User::all();
@@ -127,6 +132,21 @@ class UserController extends Controller
 
         return redirect('/users')->with('success', 'User updated!');
     }
+
+    public function updateImage(Request $request)
+    {
+        // Logic for user upload of avatar
+        if($request->hasFile('user_image')){
+            $avatar = $request->file('user_image');
+            $filename = time() . '.' . $avatar->getClientOriginalExtension();
+            Image::make($avatar)->resize(50, 50)->save( public_path('/uploads/avatars/' . $filename ) );
+            $user = Auth::user();
+            $user->avatar = $filename;
+            $user->save();
+        }
+        return view('user', ['user' => Auth::user()] );
+    }
+
 
     public function destroy(User $user)
     {
