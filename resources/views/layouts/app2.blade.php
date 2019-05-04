@@ -51,7 +51,7 @@
 
                         @else
                             <div class="profile-header-img">
-                                <img class="rounded-circle" src="/uploads/avatars/{{ Auth::user()->user_image }}" style="width:50px; height:50px; float:left; border-radius:50%; margin-right:25px;"/>
+                                <img class="rounded-circle" src="{{ Auth::user()->user_image }}" style="width:50px; height:50px; float:left; border-radius:50%; margin-right:25px;"/>
                             </div>
 
                             <li class="nav-item dropdown">

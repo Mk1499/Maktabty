@@ -14,6 +14,7 @@ class ChangeColsInBooksTable extends Migration
     public function up()
     {
         DB::statement("ALTER TABLE books MODIFY book_image LONGBLOB");
+        DB::statement("ALTER TABLE users MODIFY user_image LONGBLOB");
     }
 
     /**

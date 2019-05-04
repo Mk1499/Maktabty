@@ -144,15 +144,13 @@ class UserController extends Controller
             ],
             'username' => [
                 'required',
-                Rule::unique('users','email')->ignore($user->id)
+                Rule::unique('users','username')->ignore($user->id)
             ],
             'nationalid' => [
                 'required',
                 Rule::unique('users','nationalid')->ignore($user->id)
             ],
-            'password'=>'required',
             'phone'=>'required',
-            'user_image'=>'required',
         ]);
 
         if ($validator->fails()) {
@@ -163,38 +161,31 @@ class UserController extends Controller
         $user->username = $request->get('username');
         $user->email = $request->get('email');
         $user->nationalid = $request->get('nationalid');
-        $user->password = Hash::make($request->get('password'));
         $user->phone = $request->get('phone');
-        if($request->hasFile('user_image')){
-            $user_image = $request->file('user_image');
-            $filename = time() . '.' . $user_image->getClientOriginalExtension();
-            Image::make($user_image)->resize(50, 50)->save( public_path('/uploads/avatars/' . $filename ) );
-            $user = Auth::user();
-            $user->user_image = $filename;
+
+        if(!empty($request->get('password'))){
+            $user->password = Hash::make($request->get('password'));
+        }
+
+        if ($request->hasFile('user_image')) {
+            if($request->file('user_image')->isValid()) {
+                try {                    
+                    $image = 'data:image/' . $request->file('user_image')->getClientOriginalExtension()  . ';base64,' . base64_encode(file_get_contents($request->file('user_image')));                   
+                    $user->user_image = $image;
+                } 
+                catch (FileNotFoundException $e) {
+                    return redirect('/home')->withErrors('Book Image not saved')->withInput();
+                }
+            }
+            else{  
+                return redirect('/home')->withErrors('Image not valid')->withInput();
+            }
         }
         $user->save();
         return redirect('/home')->with('success', 'User updated!');
     }
 
-
-    // public function updateImage(Request $request)
-    // {
-    //     // Logic for user upload of avatar
-    //     if($request->hasFile('user_image')){
-    //         $user_image = $request->file('user_image');
-    //         $filename = time() . '.' . $user_image->getClientOriginalExtension();
-    //         Image::make($user_image)->resize(50, 50)->save( public_path('/uploads/avatars/' . $filename ) );
-    //         $user = Auth::user();
-    //         $user->user_image = $filename;
-    //         $user->save();
-    //     }
-    //     return view('/home', ['user' => Auth::user()] );
-    // }
-
-
-    public function destroy(User $user)
-    {
-
+    public function destroy(User $user) {
         $user->delete();
         return redirect('users')->with('success', 'User deleted!');
     }

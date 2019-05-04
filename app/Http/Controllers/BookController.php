@@ -67,14 +67,13 @@ class BookController extends Controller
                     $book->save();
             
                     return redirect('books')->with('success', 'Book saved successfully!');
-                } catch (FileNotFoundException $e) {
+                } 
+                catch (FileNotFoundException $e) {
                     return redirect('/books/create')->withErrors('Book Image not saved')->withInput();
-    
                 }
-            }else{
-                
+            }
+            else{
                 return redirect('/books/create')->withErrors('Image not valid')->withInput();
-
             }
         }else{
             return redirect('/books/create')->withErrors('Image not found')->withInput();
