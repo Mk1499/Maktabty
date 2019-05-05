@@ -29,3 +29,7 @@ body{
 .filledRatingStar {
     background-image: url("../images/FilledStar.png");
 }
+
+.lease-options{
+    display: none ; 
+}
