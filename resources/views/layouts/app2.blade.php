@@ -37,13 +37,13 @@
                 <a class="navbar-brand" href="{{ url('/home') }}">
                     Home
                 </a>
-                <a class="navbar-brand" href="{{ url('/user') }}">
+                <a class="navbar-brand" href="{{ url('/user/0') }}">
                     All Books
                 </a>
-                <a class="navbar-brand" href="{{ url('/user') }}">
+                <a class="navbar-brand" href="{{ url('/leased/0') }}">
                     Leased Books
                 </a>
-                <a class="navbar-brand" href="{{ url('/user') }}">
+                <a class="navbar-brand" href="{{ url('/favourite/0') }}">
                     Favourite Books
                 </a>
                     <ul class="navbar-nav ml-auto">
