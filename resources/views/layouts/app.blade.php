@@ -25,8 +25,8 @@
     <style>
             html, body {
                 background-color: #fff;
-                background-image:url('https://backgrounddownload.com/wp-content/uploads/2018/09/law-library-background-7.jpg');
-                background-repeat:no-repeat;
+                /*background-image:url('https://backgrounddownload.com/wp-content/uploads/2018/09/law-library-background-7.jpg');
+                */background-repeat:no-repeat;
                 background-size: 100%;
                 font-family: 'Nunito', sans-serif;
                 height: 100vh;

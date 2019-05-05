@@ -1,4 +1,5 @@
-@foreach ($comments as $comment)   
+@foreach ($comments as $comment) 
+@if ($comment->body != "Rate without comment ")  
 <div class="card">
         <div class="card-body">
             <div class="row">
@@ -45,5 +46,6 @@
                     }
                 
             </script>
+@endif            
 @endforeach
 <br /> <br /> <br /> 
