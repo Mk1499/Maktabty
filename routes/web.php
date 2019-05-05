@@ -44,3 +44,4 @@ Route::post('rateBook', 'UserBookController@rateBook');
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/changePassword','UserController@showChangePasswordForm');
