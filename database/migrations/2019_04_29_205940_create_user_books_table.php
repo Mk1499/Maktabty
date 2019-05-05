@@ -23,7 +23,7 @@ class CreateUserBooksTable extends Migration
             $table->foreign('user_id')->references('id')->on('users');
             $table->boolean('leased')->default(false);
             $table->boolean('favourite')->default(false);
-            // $table->bigInteger('rate')->default(0);
+            $table->bigInteger('number_of_days')->default(0);
             $table->timestamps();
         });
     }

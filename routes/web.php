@@ -19,7 +19,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-
+Route::resource('users', 'UserController');
 Route::resource('comments','CommentController') ; 
 
 Route::get('users/{user}',  ['as' => 'users.edit', 'uses' => 'UserController@edit']);
@@ -44,7 +44,6 @@ Route::post('addToFav', 'UserBookController@addToFav');
 Route::post('leaseBook', 'UserBookController@leaseBook');
 Route::resource('books', 'BookController');
 Route::get('/admin', 'UserController@admin_home');
-Route::resource('users', 'UserController');
 Route::resource('categories', 'CategoryController');
 Route::post('rateBook', 'UserBookController@rateBook');
 Auth::routes();
