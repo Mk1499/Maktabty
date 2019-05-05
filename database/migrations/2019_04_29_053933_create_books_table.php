@@ -21,8 +21,15 @@ class CreateBooksTable extends Migration
             $table->string('book_name', 100)->nullable();
             $table->string('book_image', 100)->nullable();
             $table->string('author', 100)->nullable();
+            $table->string('description') ; 
+            $table->unsignedBigInteger('rate') ;
+            $table->unsignedBigInteger('copies_num') ; 
+            $table->bigInteger('price')->default(0);
+            $table->softDeletes();
             $table->timestamps();
         });
+
+        DB::statement("ALTER TABLE books MODIFY book_image LONGBLOB");
     }
 
     /**

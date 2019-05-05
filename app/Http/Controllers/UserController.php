@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
 use Validator;
 
@@ -195,6 +196,11 @@ class UserController extends Controller
         return redirect('users')->with('success', 'User deleted!');
     }
 
+    public function admin_home(User $admin){
+
+        return view('admin.index', compact('admin', $admin));
+    }
+
     public function showChangePasswordForm(){
         return view('auth.changepassword');
     }
@@ -218,5 +224,6 @@ class UserController extends Controller
         $user->save();
         return redirect()->back()->with("success","Password changed successfully !");
     }
+
 
 }

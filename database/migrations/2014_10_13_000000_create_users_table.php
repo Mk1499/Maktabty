@@ -27,8 +27,11 @@ class CreateUsersTable extends Migration
             $table->boolean('isactive')->default(true);
             $table->boolean('ismanager')->default(false);
             $table->rememberToken();
+            $table->softDeletes();
             $table->timestamps();
         });
+
+        DB::statement("ALTER TABLE users MODIFY user_image LONGBLOB");
     }
     /**
      * Reverse the migrations.
