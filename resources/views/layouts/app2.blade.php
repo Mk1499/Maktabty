@@ -21,9 +21,7 @@
     <link href="{{ asset('css/bookDetails.css') }}" rel="stylesheet">
     <style>
             html, body {
-                background-image:url('https://www.chathamhouse.org/sites/default/files/styles/og_image_4096/public/media_wysiwyg/Library%202011%20%288%29.jpg?itok=hkP73NPc');
-                background-repeat:no-repeat;
-                background-size: 100%;
+                background-color: #EFC070;
                 font-family: 'Nunito', sans-serif;
                 height: 100vh;
                 margin: 0;
@@ -39,23 +37,28 @@
                 <a class="navbar-brand" href="{{ url('/home') }}">
                     Home
                 </a>
-                <a class="navbar-brand" href="{{ url('/user') }}">
+                <a class="navbar-brand" href="{{ url('/user/0') }}">
                     All Books
                 </a>
-                <a class="navbar-brand" href="{{ url('/user') }}">
+                <a class="navbar-brand" href="{{ url('/leased/0') }}">
                     Leased Books
                 </a>
-                <a class="navbar-brand" href="{{ url('/user') }}">
+                <a class="navbar-brand" href="{{ url('/favourite/0') }}">
                     Favourite Books
                 </a>
                     <ul class="navbar-nav ml-auto">
                         @guest
 
                         @else
+                            <div class="profile-header-img">
+                                <img class="rounded-circle" src="{{ Auth::user()->user_image }}" style="width:50px; height:50px; float:left; border-radius:50%; margin-right:25px;"/>
+                            </div>
+
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                     {{ Auth::user()->name }} <span class="caret"></span>
                                 </a>
+
 
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                                     <a class="dropdown-item" href="{{ route('logout') }}"

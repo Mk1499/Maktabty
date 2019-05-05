@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class ChangeColsInBooksTable extends Migration
+class AddNumOfDaysToUserBooks extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,10 @@ class ChangeColsInBooksTable extends Migration
      */
     public function up()
     {
-        DB::statement("ALTER TABLE books MODIFY book_image LONGBLOB");
-        DB::statement("ALTER TABLE users MODIFY user_image LONGBLOB");
+        Schema::table('user_books', function (Blueprint $table) {
+            //
+            $table->bigInteger('number_of_days')->default(0);
+        });
     }
 
     /**
@@ -24,7 +26,7 @@ class ChangeColsInBooksTable extends Migration
      */
     public function down()
     {
-        Schema::table('books', function (Blueprint $table) {
+        Schema::table('user_books', function (Blueprint $table) {
             //
         });
     }

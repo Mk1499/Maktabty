@@ -8,6 +8,8 @@ use App\UserBook ;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Validator;
+use View;
+use DB;
 class BookController extends Controller
 {
     /**
@@ -67,14 +69,13 @@ class BookController extends Controller
                     $book->save();
             
                     return redirect('books')->with('success', 'Book saved successfully!');
-                } catch (FileNotFoundException $e) {
+                } 
+                catch (FileNotFoundException $e) {
                     return redirect('/books/create')->withErrors('Book Image not saved')->withInput();
-    
                 }
-            }else{
-                
+            }
+            else{
                 return redirect('/books/create')->withErrors('Image not valid')->withInput();
-
             }
         }else{
             return redirect('/books/create')->withErrors('Image not found')->withInput();
@@ -96,6 +97,7 @@ class BookController extends Controller
         // $this->authorize('view',$book) ; 
 
                $book = Book::find($id);
+               $relatedBooks = Book::where('category_id','=',$book->category_id)->where('id','!=',$book->id)->get() ; 
                $this->authorize('view',$book) ; 
                $user_id = auth()->user()->id  ;
                $relations = [ 
@@ -113,7 +115,7 @@ class BookController extends Controller
                if (sizeof($rel)>0)
                 $relations = $rel[0] ; 
 
-        return view('books.show', compact('book' , 'relations'));
+        return view('books.show', compact('book' , 'relations','relatedBooks'));
     }
 
     /**
@@ -194,9 +196,104 @@ class BookController extends Controller
         return redirect('books')->with('success', 'Book deleted!');
     }
 
-    public static function getallBooks()
+    //---------------------------------------------------------------------------------------------------------------------------------------------------
+    //All books functions in navbar
+    public function getallBooks(Request $request,$order_by)
     {
-               $books = Book::paginate(3);
-               return $books;
+               $categories = Category::all();
+               if ($order_by==1)
+                    $books=Book::orderBy('rate')->paginate(1);
+                else if($order_by==2)
+                     $books=Book::orderBy('created_at')->paginate(1);
+                 else
+                     $books=Book::paginate(1);
+               $view = View::make('user');
+                return $view->with('books', $books)->with('categories',$categories)->with('current_cat',0)->with('filterMode','allBooks');
     }
+
+    public function getCategoryBooks(Request $request, $cat_id,$order_by){
+        
+        if ($order_by==1)
+            $books=Book::where('category_id', '=', $cat_id)->orderBy('rate')->paginate(1);
+        else if($order_by==2)
+            $books=Book::where('category_id', '=', $cat_id)->orderBy('created_at')->paginate(1);
+        else
+            $books=Book::where('category_id', '=', $cat_id)->paginate(1);
+        $categories = Category::all();
+        
+        return view('user')->with('books', $books)->with('categories',$categories)->with('current_cat',$cat_id)->with('filterMode','allBooks');
+    }
+    //-------------------------------------------------------------------------------------------------------------------------------------------------------
+
+    // Leased Books functions in navbar
+    public function getAllLeasedBooks(Request $request,$order_by)
+    {
+               $categories = Category::all();
+               if ($order_by==1)
+                    $books=$this->getUserBooksLeasedFavourite('leased')->orderBy('rate')->paginate(1);
+                else if($order_by==2)
+                    $books=$this->getUserBooksLeasedFavourite('leased')->orderBy('books.created_at')->paginate(1);
+                else
+                    $books=$this->getUserBooksLeasedFavourite('leased')->paginate(1);
+               $view = View::make('user');
+                return $view->with('books', $books)->with('categories',$categories)->with('current_cat',0)->with('filterMode','leasedBooks');
+    }
+
+    public function getLeasedBooksByCat(Request $request, $cat_id,$order_by){
+        if ($order_by==1)
+            $books=$this->getUserBooksLeasedFavourite('leased')->where('category_id', '=', $cat_id)->orderBy('rate')->paginate(1);
+
+        else if($order_by==2)
+            $books=$this->getUserBooksLeasedFavourite('leased')->where('category_id', '=', $cat_id)->orderBy('books.created_at')->paginate(1);
+        else
+            $books=$this->getUserBooksLeasedFavourite('leased')->where('category_id', '=', $cat_id)->paginate(1);
+        $categories = Category::all();
+        
+        return view('user')->with('books', $books)->with('categories',$categories)->with('current_cat',$cat_id)->with('filterMode','leasedBooks');
+    }
+
+//---------------------------------------------------------------------------------------------------------------------------------------------
+
+
+// Favourite Books functions in navbar
+public function getAllFavouriteBooks(Request $request,$order_by)
+{
+           $categories = Category::all();
+           if ($order_by==1)
+                $books=$this->getUserBooksLeasedFavourite('favourite')->orderBy('rate')->paginate(1);
+            else if($order_by==2)
+                $books=$this->getUserBooksLeasedFavourite('favourite')->orderBy('books.created_at')->paginate(1);
+             else
+                $books=$this->getUserBooksLeasedFavourite('favourite')->paginate(1);
+           $view = View::make('user');
+            return $view->with('books', $books)->with('categories',$categories)->with('current_cat',0)->with('filterMode','favBooks');
 }
+
+public function getFavouriteBooksByCat(Request $request, $cat_id,$order_by){
+    if ($order_by==1)
+        $books=$this->getUserBooksLeasedFavourite('favourite')->where('category_id', '=', $cat_id)->orderBy('rate')->paginate(1);
+
+    else if($order_by==2)
+        $books=$this->getUserBooksLeasedFavourite('favourite')->where('category_id', '=', $cat_id)->orderBy('books.created_at')->paginate(1);
+    else
+        $books=$this->getUserBooksLeasedFavourite('favourite')->where('category_id', '=', $cat_id)->paginate(1);
+    $categories = Category::all();
+    
+    return view('user')->with('books', $books)->with('categories',$categories)->with('current_cat',$cat_id)->with('filterMode','favBooks');
+}
+
+    
+public function getUserBooksLeasedFavourite($flag){
+    $user_id=auth()->user()->id;
+    $books=$books=DB::table('books')
+    ->join('user_books', 'books.id', '=', 'user_books.book_id')
+    ->where('user_books.user_id','=',$user_id);
+    if ($flag=='favourite')
+        return $books->where('user_books.favourite','=',1);
+    elseif ($flag=='leased')
+        return $books->where('user_books.leased','=',1);
+}
+
+}
+
+

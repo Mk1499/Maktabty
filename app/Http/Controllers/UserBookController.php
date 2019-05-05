@@ -37,7 +37,7 @@ class UserBookController extends Controller
             else if ($user_book->favourite === 0){
                 $user_book->favourite = 1;
             }
-            $user_book->book_id =    $request->get('book_id');
+            $user_book->book_id = $request->get('book_id');
             $user_book->save();
         }
         
@@ -69,13 +69,16 @@ class UserBookController extends Controller
             $user_book = UserBook::find($rel_id[0]->id) ;
             $user_book->book_id = $request->get('book_id');
             $user_book->leased = 1;
+            $user_book->number_of_days = $request->get('number_of_days') ; 
             $user_book->save();
         }
         else {
             $user_book = new UserBook([
                  'leased' => 1, 
                  'book_id' => $request->get('book_id') ,
-                 'user_id' => $user_id
+                 'user_id' => $user_id , 
+                 'number_of_days' => $request->get('number_of_days')  
+
             ]) ;
             $user_book->save() ; 
 

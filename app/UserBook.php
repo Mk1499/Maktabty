@@ -7,6 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 class UserBook extends Model
 {
     //
-    protected $fillable = [ 'leased','favourite','user_id', 'book_id'];
+    protected $fillable = ['number_of_days', 'leased','favourite','user_id', 'book_id'];
 
 }

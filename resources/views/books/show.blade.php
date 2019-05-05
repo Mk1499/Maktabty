@@ -26,10 +26,25 @@
                             </p>
                         </div>
                         <p><span id="copies" value={{$book->copies_num}} >{{$book->copies_num}} </span> Copies available</p>
-                        <button class="btn btn-success text-center" id = "lease_btn"
+                        <p> <strong>Price : </strong>{{$book->price}} EGP  </p>
+                        <button class="btn btn-success text-center" id= "show_lease-div"
                         {{($book->copies_num <= 0) || ($relations->leased === 1) ?  'disabled':null}}
-                        >Lease</button>
-                        
+                        >Lease Options</button>
+                        <br /> <br />
+                        <div class="lease-options animated card container">
+                            <h1>Lease Options</h1>
+                            
+                                <div class="form-group">
+                                <label>Number Of Days </label>
+                                <input class="form-control" min='1' value="1" max='100' type="number" id="number_of_days" />
+                                <br /> 
+                                <button class="btn btn-danger" type="submit" id="lease_btn"> Lease </button>
+                                </div>
+                            
+                        </div>
+
+
+
                     </div>
                 </div>    
             </div>
@@ -90,7 +105,23 @@
             @endif
     
         </div>
+            <hr><br><br>
+        <div class = "container related-books text-center">
+                <h2> Related Books </h2>
+            <div class="row">
+                    @foreach ($relatedBooks as $book) 
+                    <div class="card col-sm-3">
+                            <img class="card-img-top" src=" {{$book->book_image}}" alt="Card image cap" height="180rem">
+                            <div class="card-body">
+                              <h5 class="card-title">  {{$book->book_name}}</h5>
+                              <p class="card-text">{{$book->description}}</p>
+                              <a  href="{{route('books.show', ['id' => $book->id])}}" class="btn btn-primary">Book Page </a>
+                            </div>
+                          </div>
+                        @endforeach    
+            </div>               
 
+        </div>
        
 @endsection
 
@@ -130,6 +161,12 @@
 
             })
 
+            //================================= Show Lease Options ================================// 
+
+            $('#show_lease-div').click(function(){
+                $('.lease-options').css("display","block").addClass('bounceInDown') ; 
+            })
+
             // ================================ Click Lease Book Btn ===========================//
 
             $("#lease_btn").click(function(){
@@ -138,7 +175,8 @@
                     type:"POST" ,
                      
                     data: {'_token':'{{csrf_token()}}' , 
-                            'book_id' : '{{$book->id}}' , } , 
+                            'book_id' : '{{$book->id}}' ,
+                            'number_of_days':$('#number_of_days').val() } , 
                     success:function(data){
                         
                     },error:function(){ 
@@ -149,6 +187,9 @@
                 $("#copies").html(parseInt($("#copies").html() ) -1 )
                  //end of ajax
                  $(this).attr('disabled','true') ; 
+                 $('#show_lease-div').attr('disabled','true') ; 
+                 $('.lease-options').css("display","block").removeClass('bounceInDown').addClass('bounceOutUp') ; 
+
             })
 
     // ================================ Rate Book ===========================//

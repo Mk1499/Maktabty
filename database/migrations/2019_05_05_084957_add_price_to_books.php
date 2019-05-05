@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class ChangeColsInBooksTable extends Migration
+class AddPriceToBooks extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,10 @@ class ChangeColsInBooksTable extends Migration
      */
     public function up()
     {
-        DB::statement("ALTER TABLE books MODIFY book_image LONGBLOB");
-        DB::statement("ALTER TABLE users MODIFY user_image LONGBLOB");
+        Schema::table('books', function (Blueprint $table) {
+            //
+            $table->bigInteger('price')->default(0);
+        });
     }
 
     /**

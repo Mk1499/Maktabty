@@ -15,6 +15,16 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+    
+     public function show()
+    {
+        return view('user', ['user' => Auth::user()] );
+    }
+
     public function index()
     {
         $users = User::all();
@@ -56,6 +66,7 @@ class UserController extends Controller
             ],
             'phone'=>'required',
             'password'=>'required',
+            'user_image'=>'required',
 
         ]);
 
@@ -71,6 +82,7 @@ class UserController extends Controller
             'email' => $request->get('email'),
             'nationalid' => $request->get('nationalid'),
             'phone' => $request->get('phone'),
+            'user_image' => $request->get('user_image'),
             'password' => Hash::make($request->get('password')),
         ]);
 
@@ -126,9 +138,59 @@ class UserController extends Controller
         return redirect('/users')->with('success', 'User updated!');
     }
 
-    public function destroy(User $user)
-    {
 
+    public function updateProfile(Request $request, User $user)
+    {
+        $validator = Validator::make($request->all(), [
+            'name' => ['required'],
+            'email' => [
+                'required',
+                Rule::unique('users','email')->ignore($user->id)
+            ],
+            'username' => [
+                'required',
+                Rule::unique('users','username')->ignore($user->id)
+            ],
+            'nationalid' => [
+                'required',
+                Rule::unique('users','nationalid')->ignore($user->id)
+            ],
+            'phone'=>'required',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect('/home')->withErrors($validator)->withInput();
+        }
+
+        $user->name =  $request->get('name');
+        $user->username = $request->get('username');
+        $user->email = $request->get('email');
+        $user->nationalid = $request->get('nationalid');
+        $user->phone = $request->get('phone');
+
+        if(!empty($request->get('password'))){
+            $user->password = Hash::make($request->get('password'));
+        }
+
+        if ($request->hasFile('user_image')) {
+            if($request->file('user_image')->isValid()) {
+                try {                    
+                    $image = 'data:image/' . $request->file('user_image')->getClientOriginalExtension()  . ';base64,' . base64_encode(file_get_contents($request->file('user_image')));                   
+                    $user->user_image = $image;
+                } 
+                catch (FileNotFoundException $e) {
+                    return redirect('/home')->withErrors('Book Image not saved')->withInput();
+                }
+            }
+            else{  
+                return redirect('/home')->withErrors('Image not valid')->withInput();
+            }
+        }
+        $user->save();
+        return redirect('/home')->with('success', 'User updated!');
+    }
+
+    public function destroy(User $user) {
         $user->delete();
         return redirect('users')->with('success', 'User deleted!');
     }
@@ -137,4 +199,30 @@ class UserController extends Controller
 
         return view('admin.index', compact('admin', $admin));
     }
+
+    public function showChangePasswordForm(){
+        return view('auth.changepassword');
+    }
+
+    public function changePassword(Request $request){
+        if (!(Hash::check($request->get('current-password'), Auth::user()->password))) {
+            // The passwords matches
+            return redirect()->back()->with("error","Your current password does not matches with the password you provided. Please try again.");
+        }
+        if(strcmp($request->get('current-password'), $request->get('new-password')) == 0){
+            //Current password and new password are same
+            return redirect()->back()->with("error","New Password cannot be same as your current password. Please choose a different password.");
+        }
+        $validatedData = $request->validate([
+            'current-password' => 'required',
+            'new-password' => 'required|string|min:6|confirmed',
+        ]);
+        //Change Password
+        $user = Auth::user();
+        $user->password = bcrypt($request->get('new-password'));
+        $user->save();
+        return redirect()->back()->with("success","Password changed successfully !");
+    }
+
+
 }

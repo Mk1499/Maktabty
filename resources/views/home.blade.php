@@ -13,9 +13,8 @@
                             {{ session('status') }}
                         </div>
                     @endif
-                    
-                    <form method="post">
-                        @method('PATCH') 
+                    <form method="post" action="{{route('users.updateProfile', $user->id)}}" enctype="multipart/form-data">
+                        @method('PATCH')
                         @csrf
                         <div class="form-group">
 
@@ -39,20 +38,22 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="password">Password:</label>
-                            <input type="text" class="form-control" name="password" value=" " />
-                        </div>
-
-                        <div class="form-group">
                             <label for="phone">Phone:</label>
                             <input type="text" class="form-control" name="phone" value="{{ $user->phone }}" />
                         </div>
-                        <button type="submit" class="btn btn-primary">Update</button>
+
+                        <div class="form-group">
+                            <label for="password">Password:</label>
+                            <input type="text" class="form-control" name="password" value="{{ old('password') }}"/>
+                        </div>
+
+                        <div>
+                            <label>Update Profile Image</label>
+                            <input type="file" name="user_image">
+                            <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                            <input type="submit" class="pull-right btn btn-sm btn-primary">
+                        </div>
                     </form>
-
-
-                    <!-- check -->
-
                 </div>
             </div>
         </div>
