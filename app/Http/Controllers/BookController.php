@@ -95,6 +95,7 @@ class BookController extends Controller
         // $this->authorize('view',$book) ; 
 
                $book = Book::find($id);
+               $relatedBooks = Book::where('category_id','=',$book->category_id)->where('id','!=',$book->id)->get() ; 
                $this->authorize('view',$book) ; 
                $user_id = auth()->user()->id  ;
                $relations = [ 
@@ -112,7 +113,7 @@ class BookController extends Controller
                if (sizeof($rel)>0)
                 $relations = $rel[0] ; 
 
-        return view('books.show', compact('book' , 'relations'));
+        return view('books.show', compact('book' , 'relations','relatedBooks'));
     }
 
     /**
