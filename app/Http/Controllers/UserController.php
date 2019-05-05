@@ -133,4 +133,8 @@ class UserController extends Controller
         return redirect('users')->with('success', 'User deleted!');
     }
 
+    public function admin_home(User $admin){
+
+        return view('admin.index', compact('admin', $admin));
+    }
 }
