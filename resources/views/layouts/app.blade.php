@@ -24,9 +24,7 @@
 
     <style>
             html, body {
-                background-color: #fff;
-                background-image:url('https://backgrounddownload.com/wp-content/uploads/2018/09/law-library-background-7.jpg');
-                background-repeat:no-repeat;
+                background-color: #EFC070;
                 background-size: 100%;
                 font-family: 'Nunito', sans-serif;
                 height: 100vh;
@@ -55,8 +53,8 @@
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
-                                        {{ __('Logout') }}
+                                       document.getElementById('logout-form').submit();">
+                                       {{ __('Logout') }}
                                     </a>
 
                                     <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">

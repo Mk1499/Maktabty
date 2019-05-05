@@ -24,9 +24,8 @@ Route::resource('comments','CommentController') ;
 
 Route::get('users/{user}',  ['as' => 'users.edit', 'uses' => 'UserController@edit']);
 Route::patch('users/{user}/updateProfile',  ['as' => 'users.updateProfile', 'uses' => 'UserController@updateProfile']);
+Route::patch('home/changePassword',  ['as' => 'users.changePassword', 'uses' => 'UserController@changePassword']);
 
-// Route::get('user', 'UserController@show')->middleware('auth')->name('user.show');
-// Route::post('user', 'UserController@updateImage')->middleware('auth')->name('user.updateImage');
 
 Route::get('/user' , function() {
     $cats=CategoryController::getallCategories();
@@ -44,4 +43,5 @@ Route::post('rateBook', 'UserBookController@rateBook');
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
-Route::get('/changePassword','UserController@showChangePasswordForm');
+Route::get('/home/changePassword','UserController@showChangePasswordForm');
+Route::post('/home/changePassword','UserController@changePassword')->name('changePassword');
