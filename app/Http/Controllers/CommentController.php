@@ -50,6 +50,7 @@ class CommentController extends Controller
                 'body'=>['required']
             ]) ;
         $comm_before = Comment::where('user_id','=',$user_id )->where('book_id','=',$request->get('book_id'))->get() ;
+        
         if (sizeof($comm_before)>0)
         $last_rate = $comm_before[0]->rate ; 
         else 

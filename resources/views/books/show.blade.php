@@ -109,13 +109,13 @@
         <div class = "container related-books text-center">
                 <h2> Related Books </h2>
             <div class="row">
-                    @foreach ($relatedBooks as $book) 
+                    @foreach ($relatedBooks as $rel_book) 
                     <div class="card col-sm-3">
-                            <img class="card-img-top" src=" {{$book->book_image}}" alt="Card image cap" height="180rem">
+                            <img class="card-img-top" src=" {{$rel_book->book_image}}" alt="Card image cap" height="180rem">
                             <div class="card-body">
-                              <h5 class="card-title">  {{$book->book_name}}</h5>
-                              <p class="card-text">{{$book->description}}</p>
-                              <a  href="{{route('books.show', ['id' => $book->id])}}" class="btn btn-primary">Book Page </a>
+                              <h5 class="card-title">  {{$rel_book->book_name}}</h5>
+                              <p class="card-text">{{$rel_book->description}}</p>
+                              <a  href="{{route('books.show', ['id' => $rel_book->id])}}" class="btn btn-primary">Book Page </a>
                             </div>
                           </div>
                         @endforeach    
