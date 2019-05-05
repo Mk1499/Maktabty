@@ -43,8 +43,8 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="phone">Password:</label>
-                            <input type="password" class="form-control" name="password" value="{{ old('password') }}"/>
+                            <label for="password">Password:</label>
+                            <input type="text" class="form-control" name="password" value="{{ old('password') }}"/>
                         </div>
 
                         <div>
