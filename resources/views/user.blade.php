@@ -5,17 +5,20 @@
         <ul class="list-group">
         @foreach($categories as $category)
             @if($filterMode=='allBooks')
-                <li class="list-group-item"><a href="{{ url('booksByCat/'.$category->id.'/3')}}">{{$category->name}}</a></li>
+                <li class="list-group-item"><a href="{{ url('booksByCat/'.$category->id.'/3')}}" style="background-color:{{ $category->id==$current_cat ? '#ffff99':'none'}}">{{$category->name}}</a></li>
             @elseif($filterMode=='leasedBooks')
-                <li class="list-group-item"><a href="{{ url('leased/bycat/'.$category->id.'/3')}}">{{$category->name}}</a></li>
+                <li class="list-group-item"><a href="{{ url('leased/bycat/'.$category->id.'/3')}}" style="background-color:{{ $category->id==$current_cat ? '#ffff99':'none'}}">{{$category->name}}</a></li>
             @elseif($filterMode=='favBooks')
-                <li class="list-group-item"><a href="{{ url('favourite/bycat/'.$category->id.'/3')}}">{{$category->name}}</a></li>
+                <li class="list-group-item"><a href="{{ url('favourite/bycat/'.$category->id.'/3')}}" style="background-color:{{ $category->id==$current_cat ? '#ffff99':'none'}}">{{$category->name}}</a></li>
             @endif
         @endforeach
         </ul>
 @endsection
 
 @section('searchBar')
+        <script>
+            document.getElementById('{{$filterMode}}').style.backgroundColor='#ffff99';
+        </script>
 
     <div class='col-2 offset-2'>
          <input class="form-control form-control" type="text" placeholder="Search" aria-label="Search">
@@ -26,31 +29,42 @@
             <div class="btn-group" role="group" aria-label="First group">
             @if($current_cat != 0)
                  @if($filterMode=='allBooks')
-                    <a href="{{ url('booksByCat/'.$current_cat.'/1')}}"><button type="button" class="btn btn-secondary">Rate</button></a>
-                    <a href="{{ url('booksByCat/'.$current_cat.'/2')}}"><button type="button" class="btn btn-secondary">Latest</button></a>
+                    <a href="{{ url('booksByCat/'.$current_cat.'/1')}}"><button type="button" class="btn btn-outline-info" id='rateBtn'>Rate</button></a>
+                    <a href="{{ url('booksByCat/'.$current_cat.'/2')}}"><button type="button" class="btn btn-outline-info" id='latestBtn'>Latest</button></a>
                 @elseif($filterMode=='leasedBooks')
-                    <a href="{{ url('leased/bycat/'.$current_cat.'/1')}}"><button type="button" class="btn btn-secondary">Rate</button></a>
-                    <a href="{{ url('leased/bycat/'.$current_cat.'/2')}}"><button type="button" class="btn btn-secondary">Latest</button></a>
+                    <a href="{{ url('leased/bycat/'.$current_cat.'/1')}}"><button type="button" class="btn btn-outline-info" id='rateBtn'>Rate</button></a>
+                    <a href="{{ url('leased/bycat/'.$current_cat.'/2')}}"><button type="button" class="btn btn-outline-info" id='latestBtn'>Latest</button></a>
                 @elseif($filterMode=='favBooks')
-                    <a href="{{ url('favourite/bycat/'.$current_cat.'/1')}}"><button type="button" class="btn btn-secondary">Rate</button></a>
-                    <a href="{{ url('favourite/bycat/'.$current_cat.'/2')}}"><button type="button" class="btn btn-secondary">Latest</button></a>
+                    <a href="{{ url('favourite/bycat/'.$current_cat.'/1')}}"><button type="button" class="btn btn-outline-info" id='rateBtn'>Rate</button></a>
+                    <a href="{{ url('favourite/bycat/'.$current_cat.'/2')}}"><button type="button" class="btn btn-outline-info" id='latestBtn'>Latest</button></a>
                 @endif
                     
             @else
                 @if($filterMode=='allBooks')
-                    <a href="{{ url('user/1')}}"><button type="button" class="btn btn-secondary">Rate</button></a>
-                    <a href="{{ url('user/2')}}"><button type="button" class="btn btn-secondary">Latest</button></a>
+                    <a href="{{ url('user/1')}}"><button type="button" class="btn btn-outline-info" id='rateBtn'>Rate</button></a>
+                    <a href="{{ url('user/2')}}"><button type="button" class="btn btn-outline-info" id='latestBtn'>Latest</button></a>
                 @elseif($filterMode=='leasedBooks')
-                    <a href="{{ url('leased/1')}}"><button type="button" class="btn btn-secondary">Rate</button></a>
-                    <a href="{{ url('leased/2')}}"><button type="button" class="btn btn-secondary">Latest</button></a>
+                    <a href="{{ url('leased/1')}}"><button type="button" class="btn btn-outline-info" id='rateBtn'>Rate</button></a>
+                    <a href="{{ url('leased/2')}}"><button type="button" class="btn btn-outline-info" id='latestBtn'>Latest</button></a>
                 @elseif($filterMode=='favBooks')
-                    <a href="{{ url('favourite/1')}}"><button type="button" class="btn btn-secondary">Rate</button></a>
-                    <a href="{{ url('favourite/2')}}"><button type="button" class="btn btn-secondary">Latest</button></a>
+                    <a href="{{ url('favourite/1')}}"><button type="button" class="btn btn-outline-info" id='rateBtn'>Rate</button></a>
+                    <a href="{{ url('favourite/2')}}"><button type="button" class="btn btn-outline-info" id='latestBtn'>Latest</button></a>
                 @endif
             @endif
 
-                <!-- <button type="button" class="btn btn-secondary">Rate</button>
-                <button type="button" class="btn btn-secondary">Latest</button> -->
+
+            @if($order_by==1)
+                <script>
+                    //document.getElementById('rateBtn').style.backgroundColor='white';
+                    document.getElementById('rateBtn').classList.add("active");
+                 </script>
+            @elseif($order_by==2)
+                <script>
+                    // document.getElementById('latestBtn').style.backgroundColor='white';
+                    document.getElementById('latestBtn').classList.add("active");
+                </script>
+            @endif
+
             </div>
         </div>
     </div>

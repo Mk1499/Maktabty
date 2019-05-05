@@ -207,7 +207,7 @@ class BookController extends Controller
                  else
                      $books=Book::paginate(1);
                $view = View::make('user');
-                return $view->with('books', $books)->with('categories',$categories)->with('current_cat',0)->with('filterMode','allBooks');
+                return $view->with('books', $books)->with('categories',$categories)->with('current_cat',0)->with('filterMode','allBooks')->with('order_by',$order_by);
     }
 
     public function getCategoryBooks(Request $request, $cat_id,$order_by){
@@ -220,7 +220,7 @@ class BookController extends Controller
             $books=Book::where('category_id', '=', $cat_id)->paginate(1);
         $categories = Category::all();
         
-        return view('user')->with('books', $books)->with('categories',$categories)->with('current_cat',$cat_id)->with('filterMode','allBooks');
+        return view('user')->with('books', $books)->with('categories',$categories)->with('current_cat',$cat_id)->with('filterMode','allBooks')->with('order_by',$order_by);
     }
     //-------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -235,7 +235,7 @@ class BookController extends Controller
                 else
                     $books=$this->getUserBooksLeasedFavourite('leased')->paginate(1);
                $view = View::make('user');
-                return $view->with('books', $books)->with('categories',$categories)->with('current_cat',0)->with('filterMode','leasedBooks');
+                return $view->with('books', $books)->with('categories',$categories)->with('current_cat',0)->with('filterMode','leasedBooks')->with('order_by',$order_by);
     }
 
     public function getLeasedBooksByCat(Request $request, $cat_id,$order_by){
@@ -248,7 +248,7 @@ class BookController extends Controller
             $books=$this->getUserBooksLeasedFavourite('leased')->where('category_id', '=', $cat_id)->paginate(1);
         $categories = Category::all();
         
-        return view('user')->with('books', $books)->with('categories',$categories)->with('current_cat',$cat_id)->with('filterMode','leasedBooks');
+        return view('user')->with('books', $books)->with('categories',$categories)->with('current_cat',$cat_id)->with('filterMode','leasedBooks')->with('order_by',$order_by);
     }
 
 //---------------------------------------------------------------------------------------------------------------------------------------------
@@ -265,7 +265,7 @@ public function getAllFavouriteBooks(Request $request,$order_by)
              else
                 $books=$this->getUserBooksLeasedFavourite('favourite')->paginate(1);
            $view = View::make('user');
-            return $view->with('books', $books)->with('categories',$categories)->with('current_cat',0)->with('filterMode','favBooks');
+            return $view->with('books', $books)->with('categories',$categories)->with('current_cat',0)->with('filterMode','favBooks')->with('order_by',$order_by);
 }
 
 public function getFavouriteBooksByCat(Request $request, $cat_id,$order_by){
@@ -278,7 +278,7 @@ public function getFavouriteBooksByCat(Request $request, $cat_id,$order_by){
         $books=$this->getUserBooksLeasedFavourite('favourite')->where('category_id', '=', $cat_id)->paginate(1);
     $categories = Category::all();
     
-    return view('user')->with('books', $books)->with('categories',$categories)->with('current_cat',$cat_id)->with('filterMode','favBooks');
+    return view('user')->with('books', $books)->with('categories',$categories)->with('current_cat',$cat_id)->with('filterMode','favBooks')->with('order_by',$order_by);
 }
 
     
