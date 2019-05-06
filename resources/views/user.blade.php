@@ -55,12 +55,10 @@
 
             @if($order_by==1)
                 <script>
-                    //document.getElementById('rateBtn').style.backgroundColor='white';
                     document.getElementById('rateBtn').classList.add("active");
                  </script>
             @elseif($order_by==2)
                 <script>
-                    // document.getElementById('latestBtn').style.backgroundColor='white';
                     document.getElementById('latestBtn').classList.add("active");
                 </script>
             @endif
@@ -98,7 +96,8 @@
 
                             <div class='row'>
                                 <div class='col-12'>
-                                    <h3>{{$book->book_name}}</h3>
+                                    
+                                    <h3><a href="{{url('/books/'.$book->id)}}">{{$book->book_name}}</a></h3>
                                 </div>
                             </div>
 

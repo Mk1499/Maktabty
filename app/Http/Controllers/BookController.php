@@ -203,12 +203,12 @@ class BookController extends Controller
                $categories = Category::all();
 
                if ($order_by==1)
-                     $books=DB::table('books')->leftJoin('user_books', 'books.id', '=', 'user_books.book_id')->orderBy('books.rate')->paginate(1);
+                     $books=DB::table('books')->leftJoin('user_books', 'books.id', '=', 'user_books.book_id')->select('books.*','user_books.leased','user_books.favourite')->orderBy('books.rate')->paginate(1);
                     
                 else if($order_by==2)
-                    $books=DB::table('books')->leftJoin('user_books', 'books.id', '=', 'user_books.book_id')->orderBy('books.created_at')->paginate(1);
+                    $books=DB::table('books')->leftJoin('user_books', 'books.id', '=', 'user_books.book_id')->select('books.*','user_books.leased','user_books.favourite')->orderBy('books.created_at')->paginate(1);
                  else
-                    $books=DB::table('books')->leftJoin('user_books', 'books.id', '=', 'user_books.book_id')->paginate(1);
+                    $books=DB::table('books')->leftJoin('user_books', 'books.id', '=', 'user_books.book_id')->select('books.*','user_books.leased','user_books.favourite')->paginate(1);
                $view = View::make('user');
                 return $view->with('books', $books)->with('categories',$categories)->with('current_cat',0)->with('filterMode','allBooks')->with('order_by',$order_by);
     }
@@ -216,14 +216,11 @@ class BookController extends Controller
     public function getCategoryBooks(Request $request, $cat_id,$order_by){
         
         if ($order_by==1)
-            // $books=Book::where('category_id', '=', $cat_id)->orderBy('rate')->paginate(1);
-            $books=DB::table('books')->leftJoin('user_books', 'books.id', '=', 'user_books.book_id')->where('books.category_id', '=', $cat_id)->orderBy('books.rate')->paginate(1);
+            $books=DB::table('books')->leftJoin('user_books', 'books.id', '=', 'user_books.book_id')->select('books.*','user_books.leased','user_books.favourite')->where('books.category_id', '=', $cat_id)->orderBy('books.rate')->paginate(1);
         else if($order_by==2)
-            // $books=Book::where('category_id', '=', $cat_id)->orderBy('created_at')->paginate(1);
-            $books=DB::table('books')->leftJoin('user_books', 'books.id', '=', 'user_books.book_id')->where('books.category_id', '=', $cat_id)->orderBy('books.created_at')->paginate(1);
+            $books=DB::table('books')->leftJoin('user_books', 'books.id', '=', 'user_books.book_id')->select('books.*','user_books.leased','user_books.favourite')->where('books.category_id', '=', $cat_id)->orderBy('books.created_at')->paginate(1);
         else
-            // $books=Book::where('category_id', '=', $cat_id)->paginate(1);
-            $books=DB::table('books')->leftJoin('user_books', 'books.id', '=', 'user_books.book_id')->where('books.category_id', '=', $cat_id)->paginate(1);
+            $books=DB::table('books')->leftJoin('user_books', 'books.id', '=', 'user_books.book_id')->select('books.*','user_books.leased','user_books.favourite')->where('books.category_id', '=', $cat_id)->paginate(1);
         $categories = Category::all();
         
         return view('user')->with('books', $books)->with('categories',$categories)->with('current_cat',$cat_id)->with('filterMode','allBooks')->with('order_by',$order_by);
@@ -292,6 +289,7 @@ public function getUserBooksLeasedFavourite($flag){
     $user_id=auth()->user()->id;
     $books=$books=DB::table('books')
     ->join('user_books', 'books.id', '=', 'user_books.book_id')
+    ->select('books.*','user_books.leased','user_books.favourite')
     ->where('user_books.user_id','=',$user_id);
     if ($flag=='favourite')
         return $books->where('user_books.favourite','=',1);
