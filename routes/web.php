@@ -23,7 +23,7 @@ Route::get('/', function () {
 Route::resource('comments','CommentController') ; 
 
 Route::get('users/{user}',  ['as' => 'users.edit', 'uses' => 'UserController@edit']);
-Route::patch('users/{user}/updateProfile',  ['as' => 'users.updateProfile', 'uses' => 'UserController@updateProfile']);
+Route::patch('home/{user}/updateProfile',  ['as' => 'users.updateProfile', 'uses' => 'UserController@updateProfile']);
 Route::patch('home/changePassword',  ['as' => 'users.changePassword', 'uses' => 'UserController@changePassword']);
 
 

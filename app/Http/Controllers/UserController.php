@@ -164,9 +164,9 @@ class UserController extends Controller
         $user->nationalid = $request->get('nationalid');
         $user->phone = $request->get('phone');
 
-        if(!empty($request->get('password'))){
-            $user->password = Hash::make($request->get('password'));
-        }
+        // if(!empty($request->get('password'))){
+        //     $user->password = Hash::make($request->get('password'));
+        // }
 
         if ($request->hasFile('user_image')) {
             if($request->file('user_image')->isValid()) {
@@ -191,11 +191,11 @@ class UserController extends Controller
         return redirect('users')->with('success', 'User deleted!');
     }
 
-    public function showChangePasswordForm(){
+    public function showChangePasswordForm(User $user){
         return view('auth.changepassword');
     }
 
-    public function changePassword(Request $request){
+    public function changePassword(Request $request,User $user){
         if (!(Hash::check($request->get('current-password'), Auth::user()->password))) {
             // The passwords matches
             return redirect('/home')->with("error","Your current password does not matches with the password you provided. Please try again.");
@@ -209,7 +209,7 @@ class UserController extends Controller
             'new-password' => 'required|string|min:6|confirmed',
         ]);
         //Change Password
-        $user = Auth::user();
+        // $user = Auth::user();
         $user->password = bcrypt($request->get('new-password'));
         $user->save();
         return redirect('/home')->with("success","Password changed successfully !");
