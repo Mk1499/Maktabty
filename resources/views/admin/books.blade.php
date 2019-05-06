@@ -21,6 +21,7 @@
           <td>Description</td>
           <td>rate</td>
           <td>Copies #</td>
+          <td>Price</td>
           <td>category_id</td>
         
           <td colspan = 2>Actions</td>
@@ -36,6 +37,7 @@
             <td>{{$book->description}}</td>
             <td>{{$book->rate}}</td>
             <td>{{$book->copies_num}}</td>
+            <td>{{$book->price}}</td>
             <td>{{$book->category_id}}</td>
             
             
