@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddColsToBooks extends Migration
+class AddNumberOfRatesToBooks extends Migration
 {
     /**
      * Run the migrations.
@@ -15,14 +15,9 @@ class AddColsToBooks extends Migration
     {
         Schema::table('books', function (Blueprint $table) {
             //
-            $table->string('description') ; 
-            $table->unsignedBigInteger('rate') ;
-            $table->unsignedBigInteger('copies_num') ; 
+            $table->bigInteger('number_of_rates')->default(0);
 
-            
         });
-
-        
     }
 
     /**

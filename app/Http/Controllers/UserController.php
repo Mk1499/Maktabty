@@ -3,11 +3,15 @@
 namespace App\Http\Controllers;
 
 use App\User;
+use App\Book;
+use DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
 use Auth;
 use Validator;
+Use Charts;
 
 class UserController extends Controller
 {   
@@ -19,6 +23,8 @@ class UserController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+
+        $this->middleware('checkroll')->only(['admin_home','index','create','store','edit','update','destroy']);
     }
     
      public function show()
@@ -191,7 +197,40 @@ class UserController extends Controller
         return redirect('users')->with('success', 'User deleted!');
     }
 
+<<<<<<< HEAD
     public function showChangePasswordForm(User $user){
+=======
+    public function admin_home(User $admin){
+    
+        $books = DB::table('books')
+            ->join('user_books', 'books.id', '=', 'user_books.book_id')
+            ->select(DB::raw('WEEK(user_books.created_at) as week'), DB::raw('sum(user_books.number_of_days * books.price) as total_amount'))
+            ->where('user_books.leased', 1)
+            ->groupBy('week')->get();
+
+        
+        foreach ($books as $key => $value) {
+            $labels[$key]= 'Week '.$books[$key]->week;
+            $values[$key]= $books[$key]->total_amount;
+        }
+
+        $chart = Charts::create('bar', 'highcharts')
+
+        ->title("Weekly Profit")
+
+        ->elementLabel("Total Amount")
+        ->labels($labels)
+        ->values($values)
+        ->dimensions(800, 500)
+        ->responsive(true);
+
+        
+
+        return view('admin.index', compact('admin', $admin, 'chart', $chart));
+    }
+
+    public function showChangePasswordForm(){
+>>>>>>> 254937ec56b8d1828ee4d137869653101e57d281
         return view('auth.changepassword');
     }
 
@@ -214,4 +253,9 @@ class UserController extends Controller
         $user->save();
         return redirect('/home')->with("success","Password changed successfully !");
     }
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> 254937ec56b8d1828ee4d137869653101e57d281
 }

@@ -26,6 +26,7 @@
                             </p>
                         </div>
                         <p><span id="copies" value={{$book->copies_num}} >{{$book->copies_num}} </span> Copies available</p>
+                        <p> <strong>Price : </strong>{{$book->price}} EGP  </p>
                         <button class="btn btn-success text-center" id= "show_lease-div"
                         {{($book->copies_num <= 0) || ($relations->leased === 1) ?  'disabled':null}}
                         >Lease Options</button>
@@ -104,7 +105,23 @@
             @endif
     
         </div>
+            <hr><br><br>
+        <div class = "container related-books text-center">
+                <h2> Related Books </h2>
+            <div class="row">
+                    @foreach ($relatedBooks as $rel_book) 
+                    <div class="card col-sm-3">
+                            <img class="card-img-top" src=" {{$rel_book->book_image}}" alt="Card image cap" height="180rem">
+                            <div class="card-body">
+                              <h5 class="card-title">  {{$rel_book->book_name}}</h5>
+                              <p class="card-text">{{$rel_book->description}}</p>
+                              <a  href="{{route('books.show', ['id' => $rel_book->id])}}" class="btn btn-primary">Book Page </a>
+                            </div>
+                          </div>
+                        @endforeach    
+            </div>               
 
+        </div>
        
 @endsection
 

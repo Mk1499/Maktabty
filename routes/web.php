@@ -19,7 +19,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-
+Route::resource('users', 'UserController');
 Route::resource('comments','CommentController') ; 
 
 Route::get('users/{user}',  ['as' => 'users.edit', 'uses' => 'UserController@edit']);
@@ -27,17 +27,20 @@ Route::patch('home/{user}/updateProfile',  ['as' => 'users.updateProfile', 'uses
 Route::patch('home/changePassword',  ['as' => 'users.changePassword', 'uses' => 'UserController@changePassword']);
 
 
-Route::get('/user' , function() {
-    $cats=CategoryController::getallCategories();
-    $books=BookController::getallBooks();
-    return view('user',['categories' => $cats,'books'=>$books]); 
-}) ;
+Route::get('booksByCat/{cat_id}/{order_by}','BookController@getCategoryBooks');
+Route::get('/user/{order_by}','BookController@getallBooks');
 
-//Route::get('/user','CategoryController@getallCategories');
+Route::get('leased/{order_by}','BookController@getAllLeasedBooks');
+Route::get('leased/bycat/{cat_id}/{order_by}','BookController@getLeasedBooksByCat');
+
+Route::get('favourite/{order_by}','BookController@getAllFavouriteBooks');
+Route::get('favourite/bycat/{cat_id}/{order_by}','BookController@getFavouriteBooksByCat');
+
+
 Route::post('addToFav', 'UserBookController@addToFav');
 Route::post('leaseBook', 'UserBookController@leaseBook');
 Route::resource('books', 'BookController');
-Route::resource('users', 'UserController');
+Route::get('/admin', 'UserController@admin_home');
 Route::resource('categories', 'CategoryController');
 Route::post('rateBook', 'UserBookController@rateBook');
 Auth::routes();
