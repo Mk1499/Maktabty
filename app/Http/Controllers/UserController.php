@@ -200,10 +200,12 @@ class UserController extends Controller
     
         $books = DB::table('books')
             ->join('user_books', 'books.id', '=', 'user_books.book_id')
-            ->select(DB::raw('WEEK(user_books.created_at) as week'), DB::raw('sum(user_books.number_of_days * books.price) as total_amount'))
+            ->select(DB::raw('extract(week from user_books.created_at) as week'), DB::raw('sum(user_books.number_of_days * books.price) as total_amount'))
             ->where('user_books.leased', 1)
             ->groupBy('week')->get();
         
+        $values=[];
+        $labels=[];
         foreach ($books as $key => $value) {
             $labels[$key]= 'Week '.$books[$key]->week;
             $values[$key]= $books[$key]->total_amount;
