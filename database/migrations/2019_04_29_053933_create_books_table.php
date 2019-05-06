@@ -29,7 +29,7 @@ class CreateBooksTable extends Migration
             $table->timestamps();
         });
 
-        DB::statement("ALTER TABLE books MODIFY book_image LONGBLOB");
+        DB::statement("ALTER TABLE books ALTER COLUMN book_image TYPE bytea USING book_image::bytea");
     }
 
     /**
