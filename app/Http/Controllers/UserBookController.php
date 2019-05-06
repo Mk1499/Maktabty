@@ -85,7 +85,8 @@ class UserBookController extends Controller
         }
 
         $book = Book::find($request->get('book_id')) ; 
-        $book->copies_num = ($book->copies_num - 1) ; 
+        $book->copies_num = ($book->copies_num - 1) ;
+
         $book->save() ;  
 
 
@@ -126,6 +127,15 @@ class UserBookController extends Controller
             $user_book->save() ; 
 
         }
+
+
+        $book = Book::find($request->get('book_id')) ; 
+        $avgRate = ( $request->get('rate') + $book->rate ) / ( $book->number_of_rates + 1 ) ; 
+        $book->number_of_rates = ($book->number_of_rates + 1) ;
+        $book->rate = $avgRate ;  
+
+        $book->save() ;  
+
 
         return response()->json([
             'status' => 'it works!'
