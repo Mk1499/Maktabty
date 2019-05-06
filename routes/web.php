@@ -24,7 +24,7 @@ Route::resource('comments','CommentController') ;
 
 Route::get('users/{user}',  ['as' => 'users.edit', 'uses' => 'UserController@edit']);
 Route::patch('home/{user}/updateProfile',  ['as' => 'users.updateProfile', 'uses' => 'UserController@updateProfile']);
-Route::patch('home/changePassword',  ['as' => 'users.changePassword', 'uses' => 'UserController@changePassword']);
+Route::patch('home/{user}/changePassword',  ['as' => 'users.changePassword', 'uses' => 'UserController@changePassword']);
 
 
 Route::get('booksByCat/{cat_id}/{order_by}','BookController@getCategoryBooks');
@@ -46,5 +46,5 @@ Route::post('rateBook', 'UserBookController@rateBook');
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
-Route::get('/home/changePassword','UserController@showChangePasswordForm');
-Route::post('/home/changePassword','UserController@changePassword')->name('changePassword');
+Route::get('/home/{user}/changePassword','UserController@showChangePasswordForm');
+Route::post('/home/{user}/changePassword','UserController@changePassword')->name('changePassword');
