@@ -225,7 +225,7 @@ class UserController extends Controller
         return view('auth.changepassword');
     }
 
-    public function changePassword(Request $request,User $user){
+    public function changePassword(Request $request){
         if (!(Hash::check($request->get('current-password'), Auth::user()->password))) {
             // The passwords matches
             return redirect('/home')->with("error","Your current password does not matches with the password you provided. Please try again.");
@@ -239,7 +239,7 @@ class UserController extends Controller
             'new-password' => 'required|string|min:6|confirmed',
         ]);
         //Change Password
-        // $user = Auth::user();
+        $user = Auth::user();
         $user->password = bcrypt($request->get('new-password'));
         $user->save();
         return redirect('/home')->with("success","Password changed successfully !");
