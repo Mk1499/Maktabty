@@ -22,6 +22,8 @@ class UserController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+
+        $this->middleware('checkroll')->only(['admin_home','index','create','store','edit','update','destroy']);
     }
     
      public function show()

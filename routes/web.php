@@ -38,8 +38,6 @@ Route::get('favourite/{order_by}','BookController@getAllFavouriteBooks');
 Route::get('favourite/bycat/{cat_id}/{order_by}','BookController@getFavouriteBooksByCat');
 
 
-
-
 Route::post('addToFav', 'UserBookController@addToFav');
 Route::post('leaseBook', 'UserBookController@leaseBook');
 Route::resource('books', 'BookController');
