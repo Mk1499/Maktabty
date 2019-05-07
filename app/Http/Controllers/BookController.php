@@ -203,10 +203,10 @@ class BookController extends Controller
                $categories = Category::all();
 
                if ($order_by==1)
-                     $books=DB::table('books')->leftJoin('user_books', 'books.id', '=', 'user_books.book_id')->select('books.*','user_books.leased','user_books.favourite')->orderBy('books.rate')->paginate(1);
+                     $books=DB::table('books')->leftJoin('user_books', 'books.id', '=', 'user_books.book_id')->select('books.*','user_books.leased','user_books.favourite')->orderBy('books.rate', 'DESC')->paginate(1);
                     
                 else if($order_by==2)
-                    $books=DB::table('books')->leftJoin('user_books', 'books.id', '=', 'user_books.book_id')->select('books.*','user_books.leased','user_books.favourite')->orderBy('books.created_at')->paginate(1);
+                    $books=DB::table('books')->leftJoin('user_books', 'books.id', '=', 'user_books.book_id')->select('books.*','user_books.leased','user_books.favourite')->orderBy('books.created_at', 'DESC')->paginate(1);
                  else
                     $books=DB::table('books')->leftJoin('user_books', 'books.id', '=', 'user_books.book_id')->select('books.*','user_books.leased','user_books.favourite')->paginate(1);
                $view = View::make('user');
@@ -216,9 +216,9 @@ class BookController extends Controller
     public function getCategoryBooks(Request $request, $cat_id,$order_by){
         
         if ($order_by==1)
-            $books=DB::table('books')->leftJoin('user_books', 'books.id', '=', 'user_books.book_id')->select('books.*','user_books.leased','user_books.favourite')->where('books.category_id', '=', $cat_id)->orderBy('books.rate')->paginate(1);
+            $books=DB::table('books')->leftJoin('user_books', 'books.id', '=', 'user_books.book_id')->select('books.*','user_books.leased','user_books.favourite')->where('books.category_id', '=', $cat_id)->orderBy('books.rate', 'DESC')->paginate(1);
         else if($order_by==2)
-            $books=DB::table('books')->leftJoin('user_books', 'books.id', '=', 'user_books.book_id')->select('books.*','user_books.leased','user_books.favourite')->where('books.category_id', '=', $cat_id)->orderBy('books.created_at')->paginate(1);
+            $books=DB::table('books')->leftJoin('user_books', 'books.id', '=', 'user_books.book_id')->select('books.*','user_books.leased','user_books.favourite')->where('books.category_id', '=', $cat_id)->orderBy('books.created_at', 'DESC')->paginate(1);
         else
             $books=DB::table('books')->leftJoin('user_books', 'books.id', '=', 'user_books.book_id')->select('books.*','user_books.leased','user_books.favourite')->where('books.category_id', '=', $cat_id)->paginate(1);
         $categories = Category::all();
@@ -232,9 +232,9 @@ class BookController extends Controller
     {
                $categories = Category::all();
                if ($order_by==1)
-                    $books=$this->getUserBooksLeasedFavourite('leased')->orderBy('rate')->paginate(1);
+                    $books=$this->getUserBooksLeasedFavourite('leased')->orderBy('rate', 'DESC')->paginate(1);
                 else if($order_by==2)
-                    $books=$this->getUserBooksLeasedFavourite('leased')->orderBy('books.created_at')->paginate(1);
+                    $books=$this->getUserBooksLeasedFavourite('leased')->orderBy('books.created_at', 'DESC')->paginate(1);
                 else
                     $books=$this->getUserBooksLeasedFavourite('leased')->paginate(1);
                $view = View::make('user');
@@ -243,10 +243,10 @@ class BookController extends Controller
 
     public function getLeasedBooksByCat(Request $request, $cat_id,$order_by){
         if ($order_by==1)
-            $books=$this->getUserBooksLeasedFavourite('leased')->where('category_id', '=', $cat_id)->orderBy('rate')->paginate(1);
+            $books=$this->getUserBooksLeasedFavourite('leased')->where('category_id', '=', $cat_id)->orderBy('rate', 'DESC')->paginate(1);
 
         else if($order_by==2)
-            $books=$this->getUserBooksLeasedFavourite('leased')->where('category_id', '=', $cat_id)->orderBy('books.created_at')->paginate(1);
+            $books=$this->getUserBooksLeasedFavourite('leased')->where('category_id', '=', $cat_id)->orderBy('books.created_at', 'DESC')->paginate(1);
         else
             $books=$this->getUserBooksLeasedFavourite('leased')->where('category_id', '=', $cat_id)->paginate(1);
         $categories = Category::all();
@@ -262,9 +262,9 @@ public function getAllFavouriteBooks(Request $request,$order_by)
 {
            $categories = Category::all();
            if ($order_by==1)
-                $books=$this->getUserBooksLeasedFavourite('favourite')->orderBy('rate')->paginate(1);
+                $books=$this->getUserBooksLeasedFavourite('favourite')->orderBy('rate', 'DESC')->paginate(1);
             else if($order_by==2)
-                $books=$this->getUserBooksLeasedFavourite('favourite')->orderBy('books.created_at')->paginate(1);
+                $books=$this->getUserBooksLeasedFavourite('favourite')->orderBy('books.created_at', 'DESC')->paginate(1);
              else
                 $books=$this->getUserBooksLeasedFavourite('favourite')->paginate(1);
            $view = View::make('user');
@@ -273,10 +273,10 @@ public function getAllFavouriteBooks(Request $request,$order_by)
 
 public function getFavouriteBooksByCat(Request $request, $cat_id,$order_by){
     if ($order_by==1)
-        $books=$this->getUserBooksLeasedFavourite('favourite')->where('category_id', '=', $cat_id)->orderBy('rate')->paginate(1);
+        $books=$this->getUserBooksLeasedFavourite('favourite')->where('category_id', '=', $cat_id)->orderBy('rate', 'DESC')->paginate(1);
 
     else if($order_by==2)
-        $books=$this->getUserBooksLeasedFavourite('favourite')->where('category_id', '=', $cat_id)->orderBy('books.created_at')->paginate(1);
+        $books=$this->getUserBooksLeasedFavourite('favourite')->where('category_id', '=', $cat_id)->orderBy('books.created_at', 'DESC')->paginate(1);
     else
         $books=$this->getUserBooksLeasedFavourite('favourite')->where('category_id', '=', $cat_id)->paginate(1);
     $categories = Category::all();

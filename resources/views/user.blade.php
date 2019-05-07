@@ -79,7 +79,11 @@
                             </div>
 
                             <div class='row'>
-                                    <div class='col-6 offset-6'>
+
+                                    <div class=col-6>
+                                        <span><b>Avg Rate</b></span>
+                                    </div>
+                                    <div class='col-6'>
                                         <div class="avg_rate">
                                             
                                             @for ($i = 1; $i <= $book->rate; $i++)
@@ -115,11 +119,11 @@
 
                             <div class="row">
                                 <div class='col-8'>
-                                    <span >{{$book->copies_num}} copies available</span>
+                                <p><span id="copies" value={{$book->copies_num}} >{{$book->copies_num}} </span> Copies available</p>
                                 </div>
                                 <div class='col-1 offset-1'>
                                     <!-- <span style="font-size:200%;color:red;">&hearts;</span> -->
-                                    <img id ="favIcon" src={{ $book->favourite == 0 ? asset('images/EmptyHeart.png') : asset('images/FilledHeart.png') }}  width="20" height="20" >
+                                    <img class="favIcon" id="{{$book->id}}" data-bookID="{{$book->id}}" data-favState="{{$book->favourite}}" src={{ $book->favourite == 0 ? asset('images/EmptyHeart.png') : asset('images/FilledHeart.png') }}  width="20" height="20" >
                                 </div>
                             </div>
 
@@ -127,7 +131,16 @@
 
                             <div class='row'>
                                 <div class='col-12 text-center'>
-                                    <button class='btn btn-primary btn-block' {{($book->copies_num <= 0) || ($book->leased === 1) ?  'disabled':null}}>Lease</button>
+                                    <button class='btn btn-primary btn-block' id= "show_lease-div" {{($book->copies_num <= 0) || ($book->leased === 1) ?  'disabled':null}}>Lease</button>
+                                </div>
+                                <div class="lease-options animated card container">
+                                    <h1>Lease Options</h1>
+                                        <div class="form-group">
+                                            <label>Number Of Days </label>
+                                            <input class="form-control" min='1' value="1" max='100' type="number" id="number_of_days" />
+                                            <br /> 
+                                            <button class="btn btn-danger" type="submit" id="lease_btn" data-bookID="{{$book->id}}"> Lease </button>
+                                        </div>
                                 </div>
                             </div>
                     </div>
@@ -140,5 +153,82 @@
                     </div>
                 </div>
 @endsection
+
+
+
+@section('javascript')
+<meta name="csrf-token" content="{{ csrf_token() }}" />
+        <script>
+            $(document).ready(function(){
+                var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+                console.log('works') ;
+    // ================================ Click Add Book to Fav Btn ===========================//
+                $(".favIcon").click(function(e){
+                    //alert("Clikced") ; 
+                    if (this.getAttribute("src") == "{{asset('images/EmptyHeart.png')}}" )
+                        {
+                            this.setAttribute("src","{{asset('images/FilledHeart.png')}}") ;
+
+                        }
+                     
+                    else 
+                    this.setAttribute("src","{{asset('images/EmptyHeart.png')}}") ;
+                    let favChangeTo;
+                    if (this.getAttribute("data-favState")==0)
+                        favChangeTo=1;
+                    else 
+                        favChangeTo=0;
+
+                        $.ajax({
+                        url: "{{url('addToFav')}}",
+                        type:"POST" ,
+                         
+                        data: {'_token':'{{csrf_token()}}' ,
+                        'book_id' : this.getAttribute("data-bookID")  ,
+                        'favourite': favChangeTo } , 
+                        success:function(data){
+                            //alert(data);
+                        },error:function(){ 
+                            alert("error!!!!");
+                        }
+                    });
+            })
+
+
+    //================================= Show Lease Options ================================// 
+
+                $('#show_lease-div').click(function(){
+                $('.lease-options').css("display","block").addClass('bounceInDown') ; 
+            })
+
+    // ================================ Click Lease Book Btn ===========================//
+
+            $("#lease_btn").click(function(){
+                $.ajax({
+                    url: "{{url('leaseBook')}}",
+                    type:"POST" ,
+                     
+                    data: {'_token':'{{csrf_token()}}' , 
+                            'book_id' : this.getAttribute("data-bookID"),
+                            'number_of_days':$('#number_of_days').val() } , 
+                    success:function(data){
+                        
+                    },error:function(){ 
+                        alert("error!!!!");
+                    }
+                });
+
+                $("#copies").html(parseInt($("#copies").html() ) -1 )
+                 //end of ajax
+                 $(this).attr('disabled','true') ; 
+                 $('#show_lease-div').attr('disabled','true') ; 
+                 $('.lease-options').css("display","block").removeClass('bounceInDown').addClass('bounceOutUp') ; 
+
+            })
+        })
+        </script>
+
+@endsection
+
 
 

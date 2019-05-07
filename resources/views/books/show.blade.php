@@ -33,14 +33,12 @@
                         <br /> <br />
                         <div class="lease-options animated card container">
                             <h1>Lease Options</h1>
-                            
                                 <div class="form-group">
                                 <label>Number Of Days </label>
                                 <input class="form-control" min='1' value="1" max='100' type="number" id="number_of_days" />
                                 <br /> 
                                 <button class="btn btn-danger" type="submit" id="lease_btn"> Lease </button>
                                 </div>
-                            
                         </div>
 
 
@@ -51,8 +49,6 @@
     
             <div id="test" class="col-sm-4">
                 <img id ="favIcon" src={{ $relations->favourite == 0 ? asset('images/EmptyHeart.png') : asset('images/FilledHeart.png') }} style="float: right" width="50" height="50" >
-                
-                
             </div>
         </div>
     </div>
