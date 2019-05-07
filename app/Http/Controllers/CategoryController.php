@@ -8,6 +8,15 @@ use Illuminate\Validation\Rule;
 use Validator;
 class CategoryController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('auth');
+
+        $this->middleware('checkroll');
+
+    }
+
     /**
      * Display a listing of the resource.
      *

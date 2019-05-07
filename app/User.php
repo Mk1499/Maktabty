@@ -41,4 +41,11 @@ class User extends Authenticatable
     public function books(){
         return $this->hasMany('App/Book') ; 
     }
+
+    public function is_admin(){
+        if($this->ismanager) {
+            return true;    
+        }
+        return false; 
+    }
 }

@@ -42,17 +42,16 @@
                             <input type="text" class="form-control" name="phone" value="{{ $user->phone }}" />
                         </div>
 
-                        <div class="form-group">
-                            <label for="password">Password:</label>
-                            <input type="text" class="form-control" name="password" value="{{ old('password') }}"/>
-                        </div>
-
                         <div>
                             <label>Update Profile Image</label>
                             <input type="file" name="user_image">
                             <input type="hidden" name="_token" value="{{ csrf_token() }}">
                             <input type="submit" class="pull-right btn btn-sm btn-primary">
                         </div>
+                    </form>
+
+                    <form action="{{ route('users.changePassword') }}">
+                        <button type="submit" class="btn btn-primary">Change Password</button>
                     </form>
                 </div>
             </div>

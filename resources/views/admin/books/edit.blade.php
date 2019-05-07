@@ -38,8 +38,13 @@
           </div>
 
           <div class="form-group">
-              <label for="copies_num">Number of Copies</label>
+              <label for="copies_num">Number of Copies:</label>
               <input type="number" class="form-control" name="copies_num" min="1" value="{{ old('copies_num',$book->copies_num) }}"/>
+          </div>
+
+          <div class="form-group">
+              <label for="price">Price:</label>
+              <input type="number" class="form-control" name="price" min="1" value="{{ old('price',$book->price) }}"/>
           </div>
 
           <div class="form-group">

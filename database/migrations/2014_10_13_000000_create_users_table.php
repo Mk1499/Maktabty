@@ -23,7 +23,7 @@ class CreateUsersTable extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->string('phone');
-            $table->string('user_image')->default('user.jpg');
+            $table->string('user_image', 100)->nullable();
             $table->boolean('isactive')->default(true);
             $table->boolean('ismanager')->default(false);
             $table->rememberToken();
@@ -31,7 +31,7 @@ class CreateUsersTable extends Migration
             $table->timestamps();
         });
 
-        DB::statement("ALTER TABLE users MODIFY user_image LONGBLOB");
+        DB::statement("ALTER TABLE users ALTER COLUMN user_image TYPE bytea USING user_image::bytea");
     }
     /**
      * Reverse the migrations.
