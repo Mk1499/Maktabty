@@ -51,3 +51,4 @@ Route::get('/home', 'HomeController@index')->name('home');
 // Route::post('/home/{user}/changePassword','UserController@changePassword')->name('changePassword');
 Route::get('/home/changePassword','UserController@showChangePasswordForm');
 Route::post('/home/changePassword','UserController@changePassword')->name('changePassword');
+Route::post('/login/custom', ['uses' => 'LoginController@login' , 'as' => 'login.custom']);
