@@ -22,7 +22,7 @@
                         </div>
                         <div class="book_description">
                             <p>
-                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Inventore, fuga corporis consectetur aspernatur aperiam soluta eveniet deleniti facere harum possimus est veritatis officiis modi, quisquam dolores veniam quis id dolore?
+                                {{$book->description}}
                             </p>
                         </div>
                         <p><span id="copies" value={{$book->copies_num}} >{{$book->copies_num}} </span> Copies available</p>
