@@ -30,12 +30,12 @@ class UserBookController extends Controller
         // ]);
         if(sizeof($rel_id)> 0 ){
             $user_book = UserBook::find($rel_id[0]->id) ; 
-            if ($user_book->favourite === 1){
-                $user_book->favourite = 0;
+            if ($user_book->favourite == true){
+                $user_book->favourite = false;
             }
 
-            else if ($user_book->favourite === 0){
-                $user_book->favourite = 1;
+            else if ($user_book->favourite == false){
+                $user_book->favourite = true;
             }
             $user_book->book_id = $request->get('book_id');
             $user_book->save();
