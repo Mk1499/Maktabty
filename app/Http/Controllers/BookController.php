@@ -57,7 +57,9 @@ class BookController extends Controller
         $request->validate([
             'book_name'=>'required',
             'author'=>'required',
-            'book_image'=>'required'
+            'book_image'=>'required',
+            'price'=>'required',
+            'copies_num'=>'required'
         ]);
         
         if ($request->hasFile('book_image')) {
@@ -72,7 +74,8 @@ class BookController extends Controller
                         "category_id" => $request->get('category'),
                         "description" => $request->get('description'),
                         "rate" => 0,
-                        "copies_num" => $request->get('copies_num')
+                        "copies_num" => $request->get('copies_num'),
+                        "price" => $request->get('price')
                         ]);
             
                     $book->save();
@@ -156,6 +159,8 @@ class BookController extends Controller
             'category'=>['required'],
             'copies_num'=>['required'],
             'author'=>['required'],
+            'price'=>['required'],
+            'description'=>['required'],
         ]);
 
         if ($validator->fails()) {
@@ -186,6 +191,7 @@ class BookController extends Controller
         $book->description = $request->get('description');
         $book->author = $request->get('author');
         $book->copies_num = $request->get('copies_num');
+        $book->price = $request->get('price');
 
         $book->save();
 
